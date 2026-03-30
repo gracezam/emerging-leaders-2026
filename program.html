@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Program Book | 2026 Emerging Leaders Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --maroon: #8B1A1A;
+    --teal: #006B77;
+    --teal-light: #00939F;
+    --gold: #C9A84C;
+    --cream: #FAF7F2;
+    --dark: #1A1A1A;
+    --mid: #4A4A4A;
+    --light: #F0EDE8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    line-height: 1.7;
+  }
+
+  /* Nav bar */
+  .topnav {
+    background: var(--maroon);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .topnav a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; }
+  .topnav a:hover { color: white; }
+  .topnav .sep { color: rgba(255,255,255,0.3); }
+  .topnav .current { color: white; font-weight: 600; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--maroon) 0%, #5A1010 50%, var(--teal) 100%);
+    padding: 80px 32px 70px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .hero-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 300;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+  .hero-meta {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    font-size: 13px;
+    padding: 7px 18px;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Content */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 64px 32px 100px;
+  }
+
+  /* Section heading */
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .section-rule {
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--maroon), var(--teal));
+    border-radius: 2px;
+    margin-bottom: 32px;
+  }
+
+  /* About block */
+  .about-block {
+    background: white;
+    border-radius: 20px;
+    padding: 48px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    margin-bottom: 72px;
+    border-left: 5px solid var(--teal);
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--mid);
+  }
+  .about-block p + p { margin-top: 20px; }
+  .about-block strong { color: var(--dark); }
+
+  /* Speaker cards */
+  .speakers-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    margin-bottom: 72px;
+  }
+
+  .speaker-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    display: grid;
+    grid-template-columns: 220px 1fr;
+  }
+
+  @media (max-width: 620px) {
+    .speaker-card { grid-template-columns: 1fr; }
+    .speaker-photo { height: 220px; }
+  }
+
+  .speaker-photo {
+    background: linear-gradient(135deg, var(--light), #DDD);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    min-height: 240px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .speaker-photo .initials {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--maroon);
+  }
+
+  .speaker-photo.teal-bg { background: linear-gradient(135deg, rgba(0,107,119,0.15), rgba(0,107,119,0.05)); }
+  .speaker-photo.maroon-bg { background: linear-gradient(135deg, rgba(139,26,26,0.12), rgba(139,26,26,0.04)); }
+  .speaker-photo.gold-bg { background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.06)); }
+
+  .speaker-body {
+    padding: 36px 40px;
+  }
+
+  .speaker-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+
+  .speaker-titles {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .speaker-title-item {
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .speaker-divider {
+    width: 32px;
+    height: 2px;
+    background: var(--maroon);
+    border-radius: 2px;
+    margin-bottom: 18px;
+  }
+
+  .speaker-bio {
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.8;
+  }
+
+  .speaker-bio p + p { margin-top: 14px; }
+
+  /* Tag pills */
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .tag {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .tag.maroon { background: rgba(139,26,26,0.1); color: var(--maroon); }
+  .tag.teal { background: rgba(0,107,119,0.1); color: var(--teal); }
+  .tag.gold { background: rgba(201,168,76,0.15); color: #8B6914; }
+
+  /* Objectives */
+  .objectives-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 72px;
+  }
+  .obj-card {
+    background: white;
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    text-align: center;
+    border-top: 3px solid var(--teal);
+  }
+  .obj-card .icon { font-size: 30px; margin-bottom: 12px; display: block; }
+  .obj-card h3 { font-family: 'Playfair Display', serif; font-size: 16px; margin-bottom: 8px; color: var(--dark); }
+  .obj-card p { font-size: 14px; color: var(--mid); line-height: 1.6; }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--teal);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 0;
+    margin-bottom: 40px;
+    transition: gap 0.2s;
+  }
+  .back-link:hover { gap: 12px; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html">Home</a>
+  <span class="sep">›</span>
+  <span class="current">Digital Program Book</span>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">2026 Emerging Leaders Workshop</p>
+  <h1>Digital Program Book</h1>
+  <p class="hero-sub">Changing the Face of Cancer Center Leadership</p>
+  <div class="hero-meta">
+    <span class="hero-tag">📅 June 4 – 5, 2026</span>
+    <span class="hero-tag">📍 Albuquerque, NM</span>
+    <span class="hero-tag">🏥 UNM Comprehensive Cancer Center</span>
+  </div>
+</section>
+
+<div class="content">
+  <a href="index.html" class="back-link">← Back to Hub</a>
+
+  <!-- About -->
+  <p class="section-label">About the Workshop</p>
+  <h2 class="section-title">Welcome</h2>
+  <div class="section-rule"></div>
+
+  <div class="about-block">
+    <p>
+      The <strong>2026 Emerging Leaders Workshop: Changing the Face of Cancer Center Leadership</strong>
+      equips developing cancer center leaders with a foundation in leadership within the specific context
+      of matrix comprehensive cancer centers.
+    </p>
+    <p>
+      The workshop curriculum is designed with content and experiences to cultivate leadership excellence
+      and a deep understanding of organizational structure and strategy. Participants will explore what it
+      means to lead within a complex, matrixed institution — navigating shared authority, interdisciplinary
+      collaboration, and institutional mission.
+    </p>
+    <p>
+      In addition to skill-building, the workshop offers <strong>strengths identification</strong> through the
+      CliftonStrengths Assessment, <strong>unique networking and team-building opportunities</strong>, and
+      concrete <strong>strategies for career advancement</strong> within NCI-designated cancer centers.
+    </p>
+    <p>
+      This workshop is a partnership between the <strong>University of New Mexico Comprehensive Cancer Center</strong>
+      and <strong>USC Norris Comprehensive Cancer Center</strong>, two NCI-designated institutions committed to
+      developing the next generation of diverse cancer center leaders.
+    </p>
+  </div>
+
+  <!-- Objectives -->
+  <p class="section-label">What You'll Gain</p>
+  <h2 class="section-title">Workshop Objectives</h2>
+  <div class="section-rule"></div>
+
+  <div class="objectives-grid">
+    <div class="obj-card">
+      <span class="icon">🧭</span>
+      <h3>Leadership Foundation</h3>
+      <p>Build a framework for leading within matrix comprehensive cancer centers.</p>
+    </div>
+    <div class="obj-card">
+      <span class="icon">💡</span>
+      <h3>Strengths Identification</h3>
+      <p>Discover your CliftonStrengths profile and how to leverage it as a leader.</p>
+    </div>
+    <div class="obj-card">
+      <span class="icon">🤝</span>
+      <h3>Networking & Mentoring</h3>
+      <p>Connect with peers and senior leaders across NCI-designated cancer centers.</p>
+    </div>
+    <div class="obj-card">
+      <span class="icon">📣</span>
+      <h3>Persuasive Communication</h3>
+      <p>Level up your voice and advocacy skills for meaningful institutional impact.</p>
+    </div>
+    <div class="obj-card">
+      <span class="icon">🚀</span>
+      <h3>Career Advancement</h3>
+      <p>Develop actionable strategies to grow your leadership trajectory.</p>
+    </div>
+    <div class="obj-card">
+      <span class="icon">🌍</span>
+      <h3>Equity & Inclusion</h3>
+      <p>Understand how to advance health equity and diverse leadership in cancer research.</p>
+    </div>
+  </div>
+
+  <!-- Speakers -->
+  <p class="section-label">Faculty</p>
+  <h2 class="section-title">Featured Speakers</h2>
+  <div class="section-rule"></div>
+
+  <div class="speakers-grid">
+
+    <!-- Caryn Lerman -->
+    <div class="speaker-card">
+      <div class="speaker-photo maroon-bg">
+        <div class="initials">CL</div>
+      </div>
+      <div class="speaker-body">
+        <div class="speaker-name">Caryn Lerman, PhD</div>
+        <div class="speaker-titles">
+          <span class="speaker-title-item">Director, USC Norris Comprehensive Cancer Center</span>
+          <span class="speaker-title-item">Associate Dean for Cancer Programs</span>
+          <span class="speaker-title-item">H. Leslie and Elaine S. Hoffman Chair in Cancer Research</span>
+          <span class="speaker-title-item">USC Distinguished Professor, Keck School of Medicine</span>
+        </div>
+        <div class="speaker-divider"></div>
+        <div class="speaker-bio">
+          <p>
+            Dr. Caryn Lerman is nationally recognized for her cancer prevention research that bridges the
+            fields of neuroscience, genomics, pharmacology, and behavioral science. She has published
+            over 380 peer-reviewed articles throughout her distinguished career.
+          </p>
+          <p>
+            An elected member of the National Academy of Medicine, Dr. Lerman has served as President
+            of the Association of American Cancer Institutes, member of the NCI Board of Scientific
+            Advisors, the National Human Genome Research Advisory Council, and the National Institute
+            on Drug Abuse Advisory Council.
+          </p>
+          <p>
+            Dr. Lerman is the former chair of the NCI Cancer Center Review Committee, where she played
+            a pivotal role in evaluating and supporting NCI-designated cancer centers across the country.
+          </p>
+        </div>
+        <div class="tag-row">
+          <span class="tag maroon">Cancer Prevention</span>
+          <span class="tag teal">Neuroscience</span>
+          <span class="tag teal">Genomics</span>
+          <span class="tag maroon">National Academy of Medicine</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Yolanda Sanchez -->
+    <div class="speaker-card">
+      <div class="speaker-photo teal-bg">
+        <div class="initials">YS</div>
+      </div>
+      <div class="speaker-body">
+        <div class="speaker-name">Yolanda Sanchez, PhD</div>
+        <div class="speaker-titles">
+          <span class="speaker-title-item">Director and CEO, The University of New Mexico Comprehensive Cancer Center</span>
+          <span class="speaker-title-item">The Maurice and Marguerite Liberman Distinguished Chair in Cancer Research</span>
+          <span class="speaker-title-item">Professor, Department of Internal Medicine</span>
+        </div>
+        <div class="speaker-divider"></div>
+        <div class="speaker-bio">
+          <p>
+            Dr. Yolanda (Yoli) Sanchez is the <strong>first Hispanic/Latin woman to lead a National Cancer
+            Institute-designated Comprehensive Cancer Center</strong> — a historic milestone for representation
+            in cancer center leadership. She is an international expert in DNA damage response pathways.
+          </p>
+          <p>
+            Prior to joining the University of New Mexico, Dr. Sanchez served as the Associate Director of
+            Basic Sciences at Dartmouth Cancer Center, another NCI-designated Comprehensive Cancer Center.
+          </p>
+          <p>
+            As Director and CEO of the UNM Comprehensive Cancer Center (UNMCCC), Dr. Sanchez is
+            responsible for all cancer research and clinical programs at the University of New Mexico,
+            spanning all schools, colleges, departments, and facilities. She collaborates with leadership
+            at UNM, The Health Sciences, and UNM Health, as well as New Mexico's legislative and
+            executive branches to bring the latest cancer prevention diagnostics and therapeutics to
+            New Mexicans.
+          </p>
+        </div>
+        <div class="tag-row">
+          <span class="tag teal">DNA Damage Response</span>
+          <span class="tag maroon">Cancer Center Leadership</span>
+          <span class="tag gold">Historic First</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chanita Hughes Halbert -->
+    <div class="speaker-card">
+      <div class="speaker-photo gold-bg">
+        <div class="initials">CH</div>
+      </div>
+      <div class="speaker-body">
+        <div class="speaker-name">Chanita Hughes Halbert, PhD</div>
+        <div class="speaker-titles">
+          <span class="speaker-title-item">Executive Vice Chair, Vice Chair for Research & Distinguished Professor, Department of Population and Public Health Sciences</span>
+          <span class="speaker-title-item">Dr. Arthur and Priscilla Ulene Chair in Women's Cancer, Keck School of Medicine</span>
+          <span class="speaker-title-item">Associate Director for Cancer Health Disparities, USC Norris Comprehensive Cancer Center</span>
+        </div>
+        <div class="speaker-divider"></div>
+        <div class="speaker-bio">
+          <p>
+            Dr. Chanita Hughes Halbert is renowned for her leadership in cancer prevention and minority
+            health research. She has dedicated her career to reducing disparities in cancer outcomes that
+            affect patients from underrepresented communities, with a primary focus on African American
+            communities.
+          </p>
+          <p>
+            She has identified sociocultural, psychological, genetic, and environmental determinants of
+            cancer health disparities, and translates this knowledge into evidence-based interventions to
+            improve health equity among racially and ethnically diverse populations, as well as other
+            medically underserved groups.
+          </p>
+          <p>
+            Hughes Halbert was elected to the National Academy of Medicine in 2017. She received the
+            American Cancer Society's Cancer Control Award in 2010. President Barack Obama appointed
+            her to the National Cancer Institute's Board of Scientific Advisors in 2012, and in 2014 she
+            joined the National Advisory Council of the National Human Genome Research Institute.
+          </p>
+        </div>
+        <div class="tag-row">
+          <span class="tag gold">Health Equity</span>
+          <span class="tag maroon">Cancer Disparities</span>
+          <span class="tag teal">National Academy of Medicine</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- David Chow -->
+    <div class="speaker-card">
+      <div class="speaker-photo teal-bg">
+        <div class="initials">DC</div>
+      </div>
+      <div class="speaker-body">
+        <div class="speaker-name">David Chow, MA, MS, PCC</div>
+        <div class="speaker-titles">
+          <span class="speaker-title-item">Leadership Development Executive Coach</span>
+          <span class="speaker-title-item">Founder, Leading Together & Trusted Advisor Associates, LLC</span>
+        </div>
+        <div class="speaker-divider"></div>
+        <div class="speaker-bio">
+          <p>
+            In 2004, David (Dave) Chow founded Leading Together, a company that provides executive
+            coaching, leadership development, and organizational consulting. His passion is to inspire and
+            challenge leaders toward personal mastery and psychological well-being, resulting in thriving
+            organizations and, ultimately, a better world.
+          </p>
+          <p>
+            A highly effective and seasoned executive coach, David has coached hundreds of leaders from
+            the C-Suite to emerging leaders across diverse industries — including high-tech, biotech,
+            healthcare, engineering, construction, research/academia, government, and non-profit organizations.
+          </p>
+          <p>
+            Described as a creative, energetic, and highly engaging facilitator, David has designed and
+            facilitated custom leadership programs across the globe on topics including Authentic Leadership,
+            Leading with Emotional Intelligence, Executive Presence, and Strengths-Based Leadership.
+          </p>
+        </div>
+        <div class="tag-row">
+          <span class="tag teal">Executive Coaching</span>
+          <span class="tag maroon">CliftonStrengths</span>
+          <span class="tag gold">Emotional Intelligence</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Pre-work callout -->
+  <div style="background: linear-gradient(135deg, var(--teal), var(--teal-light)); border-radius: 20px; padding: 40px 48px; color: white; text-align: center; margin-bottom: 48px;">
+    <div style="font-size: 36px; margin-bottom: 12px;">📋</div>
+    <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 10px;">Pre-Work: CliftonStrengths Assessment</h3>
+    <p style="opacity: 0.9; font-size: 15px; max-width: 480px; margin: 0 auto 16px;">
+      Materials will be emailed by David Chow. All attendees are asked to complete the
+      CliftonStrengths Assessment by <strong>May 25, 2026</strong> — during the weeks of May 13–29.
+    </p>
+    <div style="display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 10px; padding: 8px 20px; font-size: 14px; font-weight: 600;">
+      Deadline: May 25, 2026
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

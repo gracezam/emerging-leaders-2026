@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visiting Albuquerque | 2026 Emerging Leaders Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --maroon: #8B1A1A;
+    --teal: #006B77;
+    --gold: #C9A84C;
+    --terra: #C2622D;
+    --sage: #6B8C6B;
+    --cream: #FAF7F2;
+    --dark: #1A1A1A;
+    --mid: #4A4A4A;
+    --light: #F0EDE8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--dark); }
+
+  .topnav {
+    background: var(--maroon);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .topnav a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; }
+  .topnav a:hover { color: white; }
+  .topnav .sep { color: rgba(255,255,255,0.3); }
+  .topnav .current { color: white; font-weight: 600; }
+
+  .hero {
+    background: linear-gradient(160deg, var(--terra) 0%, #8B3A1A 40%, var(--gold) 100%);
+    padding: 70px 32px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '🌵';
+    position: absolute;
+    font-size: 200px;
+    opacity: 0.08;
+    right: -30px;
+    bottom: -40px;
+  }
+  .hero-eyebrow {
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.65); margin-bottom: 12px; font-weight: 600;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 46px);
+    font-weight: 900; color: white; margin-bottom: 14px;
+  }
+  .hero-sub { font-size: 16px; color: rgba(255,255,255,0.8); font-weight: 300; max-width: 500px; margin: 0 auto; }
+
+  .content { max-width: 880px; margin: 0 auto; padding: 56px 32px 100px; }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--teal); text-decoration: none; font-size: 14px; font-weight: 600;
+    padding: 10px 0; margin-bottom: 36px; transition: gap 0.2s;
+  }
+  .back-link:hover { gap: 12px; }
+
+  .section-label {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--terra); font-weight: 600; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 700; color: var(--dark); margin-bottom: 8px;
+  }
+  .section-rule {
+    width: 48px; height: 3px;
+    background: linear-gradient(90deg, var(--terra), var(--gold));
+    border-radius: 2px; margin-bottom: 32px;
+  }
+
+  /* Category headers */
+  .cat-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    margin-top: 44px;
+  }
+  .cat-emoji { font-size: 26px; }
+  .cat-name { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--dark); }
+  .cat-rule { flex: 1; height: 1px; background: #E0DAD4; }
+
+  /* Place cards */
+  .place-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+
+  .place-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1.5px solid rgba(0,0,0,0.05);
+  }
+  .place-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.1); }
+
+  .place-color-bar { height: 5px; }
+  .bar-terra { background: linear-gradient(90deg, var(--terra), var(--gold)); }
+  .bar-sage { background: linear-gradient(90deg, var(--sage), #8DB88D); }
+  .bar-teal { background: linear-gradient(90deg, var(--teal), #00A8B5); }
+  .bar-maroon { background: linear-gradient(90deg, var(--maroon), var(--terra)); }
+  .bar-gold { background: linear-gradient(90deg, var(--gold), #E8C46A); }
+
+  .place-body { padding: 20px 22px; }
+  .must-badge {
+    display: inline-block;
+    background: var(--terra);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+  .must-badge.teal { background: var(--teal); }
+  .must-badge.sage { background: var(--sage); }
+  .must-badge.gold { background: var(--gold); color: #333; }
+
+  .place-name { font-size: 16px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .place-desc { font-size: 13.5px; color: var(--mid); line-height: 1.6; margin-bottom: 10px; }
+  .place-note {
+    font-size: 12.5px;
+    color: var(--terra);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Workshop suggestion callout */
+  .workshop-mentions {
+    background: linear-gradient(135deg, rgba(139,26,26,0.06), rgba(0,107,119,0.06));
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 40px 0 0;
+    border: 1px solid rgba(0,0,0,0.07);
+  }
+  .workshop-mentions h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: var(--dark); margin-bottom: 8px;
+  }
+  .workshop-mentions p { font-size: 14px; color: var(--mid); margin-bottom: 12px; }
+  .venue-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+  .venue-tag {
+    background: white;
+    border: 1.5px solid #DDD;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+  }
+  .venue-tag span { display: block; font-size: 11px; color: var(--mid); font-weight: 400; margin-top: 2px; }
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="index.html">Home</a>
+  <span class="sep">›</span>
+  <span class="current">Visiting Albuquerque</span>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">2026 Emerging Leaders Workshop</p>
+  <h1>Visiting Albuquerque</h1>
+  <p class="hero-sub">The Duke City awaits. Here's your local guide to the must-sees, must-tastes, and must-dos during your visit.</p>
+</section>
+
+<div class="content">
+  <a href="index.html" class="back-link">← Back to Hub</a>
+
+  <p class="section-label">Your ABQ Guide</p>
+  <h2 class="section-title">Must-Sees & Must-Dos</h2>
+  <div class="section-rule"></div>
+
+  <!-- Dining -->
+  <div class="cat-header">
+    <span class="cat-emoji">🍽️</span>
+    <span class="cat-name">Dining & Food Scene</span>
+    <div class="cat-rule"></div>
+  </div>
+
+  <div class="place-grid">
+
+    <div class="place-card">
+      <div class="place-color-bar bar-terra"></div>
+      <div class="place-body">
+        <span class="must-badge">Workshop Suggestion</span>
+        <div class="place-name">Sawmill Market</div>
+        <div class="place-desc">A vibrant food hall in the Sawmill District with an ever-rotating roster of local vendors, craft beverages, and New Mexican bites. Perfect for a casual evening exploring with new colleagues.</div>
+        <div class="place-note">📍 1909 Bellamah Ave NW</div>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-color-bar bar-terra"></div>
+      <div class="place-body">
+        <span class="must-badge">Workshop Suggestion</span>
+        <div class="place-name">Seasons Rotisserie & Grill</div>
+        <div class="place-desc">An Albuquerque classic with a gorgeous rooftop patio overlooking Old Town. Known for rotisserie chicken, New Mexican flavors, and an outstanding wine list — great for a group dinner.</div>
+        <div class="place-note">📍 2031 Mountain Rd NW</div>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-color-bar bar-gold"></div>
+      <div class="place-body">
+        <span class="must-badge gold">Workshop Dinner</span>
+        <div class="place-name">Campo at Los Poblanos</div>
+        <div class="place-desc">Your Day 1 workshop dinner venue — and one of ABQ's most beloved farm-to-table restaurants. Nestled on a historic lavender farm with locally sourced, seasonal New Mexican cuisine.</div>
+        <div class="place-note">📍 4803 Rio Grande Blvd NW</div>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-color-bar bar-maroon"></div>
+      <div class="place-body">
+        <span class="must-badge teal">Local Favorite</span>
+        <div class="place-name">Duran's New Mexican Restaurant</div>
+        <div class="place-desc">A beloved neighborhood institution serving authentic New Mexican food since 1929. Warm, unpretentious, and the place locals send their out-of-town guests for red or green chile.</div>
+        <div class="place-note">📍 1800 Central Ave NW</div>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-color-bar bar-sage"></div>
+      <div class="place-body">
+        <span class="must-badge sage">Don't Miss</span>
+        <div class="place-name">Casa de Benavidez</div>
+        <div class="place-desc">A family-owned New Mexican gem that's been serving the community for decades. Big portions, award-winning green chile, and a warm hacienda atmosphere that feels quintessentially ABQ.</div>
+        <div class="place-note">📍 8032 Fourth St NW</div>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-color-bar bar-teal"></div>
+      <div class="place-body">
+        <span class="must-badge teal">Brunch Pick</span>
+        <div class="place-name">Frontier Restaurant</div>
+        <div class="place-desc">An Albuquerque legend right across from UNM campus. Open since 1971, famous for breakfast burritos, green chile stew, and their legendary sweet rolls. Cash-only, always worth it.</div>
+        <div class="place-note">📍 2400 Central Ave SE</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Culture -->
+  <div class="cat-header">
+    <span class="cat-emoji">🎨</span>
+    <span class="cat-name">Culture & Arts</span>
+    <div class="cat-rule"></div>
+  </div>
+
+  <div class="place-grid">
+
+    <div class="place-card">
+      <div class="place-color-bar bar-terra"></div>
+      <div class="place-body">
+        <span class="must-badge">Must See</span>
+        <div class="place-name">Old Town Albuquerque</div>
+        <div class="place-desc">Founded in 1706, Albuquerque's historic heart is a walkable plaza surrounded by adobe buildings, galleries, jewelry shops, and the stunning San Felipe de Neri Church. Plan at least an hour here.</div>
+        <div class="place-note">📍 Old Town Plaza · 5 min from Hotel Chaco</div>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-color-bar bar-sage"></div>
+      <div class="place-body">
+        <span class="must-badge sage">Cultural Gem</span>
+        <div class="place-name">Indian Pueblo Cultural Center</div>
+        <div class="place-desc">A world-class museum and cultural center operated by New Mexico's 19 Pueblos. Stunning exhibits on Indigenous history, art, and traditions — a profound and moving experience.</div>
+        <div class="place-note">📍 2401 12th St NW · Walking from Hotel Chaco</div>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-color-bar bar-teal"></div>
+      <div class="place-body">
+        <span class="must-badge teal">Art Scene</span>
+        <div class="place-name">516 Arts</div>
+        <div class="place-desc">Downtown ABQ's leading contemporary art center, showcasing local, national, and international artists with rotating exhibitions. Free admission and always thought-provoking.</div>
+        <div class="place-note">📍 516 Central Ave SW</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Outdoors -->
+  <div class="cat-header">
+    <span class="cat-emoji">🏔️</span>
+    <span class="cat-name">Outdoors & Nature</span>
+    <div class="cat-rule"></div>
+  </div>
+
+  <div class="place-grid">
+
+    <div class="place-card">
+      <div class="place-color-bar bar-gold"></div>
+      <div class="place-body">
+        <span class="must-badge gold">Iconic ABQ</span>
+        <div class="place-name">Sandia Peak Tramway</div>
+        <div class="place-desc">The world's longest aerial tramway whisks you 10,378 feet above sea level with panoramic views of the Rio Grande valley and the vast New Mexican landscape. Breathtaking at sunset.</div>
+        <div class="place-note">📍 30 Tramway Rd NE</div>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-color-bar bar-terra"></div>
+      <div class="place-body">
+        <span class="must-badge">Only in ABQ</span>
+        <div class="place-name">Petroglyph National Monument</div>
+        <div class="place-desc">Over 24,000 ancient rock carvings made by Ancestral Puebloans and early Spanish settlers line this volcanic escarpment. An awe-inspiring reminder of the deep history of this land.</div>
+        <div class="place-note">📍 6001 Unser Blvd NW · Free Entry</div>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-color-bar bar-sage"></div>
+      <div class="place-body">
+        <span class="must-badge sage">Morning Walk</span>
+        <div class="place-name">Rio Grande Nature Center</div>
+        <div class="place-desc">A peaceful riparian sanctuary along the Rio Grande, minutes from Hotel Chaco. Excellent birdwatching, scenic riverside trails, and a genuine sense of calm before the workshop day begins.</div>
+        <div class="place-note">📍 2901 Candelaria Rd NW</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Coffee & Drinks -->
+  <div class="cat-header">
+    <span class="cat-emoji">☕</span>
+    <span class="cat-name">Coffee & Quick Bites</span>
+    <div class="cat-rule"></div>
+  </div>
+
+  <div class="place-grid">
+
+    <div class="place-card">
+      <div class="place-color-bar bar-teal"></div>
+      <div class="place-body">
+        <span class="must-badge teal">Local Roaster</span>
+        <div class="place-name">Zendo Coffee</div>
+        <div class="place-desc">Albuquerque's beloved specialty coffee roaster, with beautiful shop spaces and some of the best single-origin coffee in the Southwest. A calm spot for early morning prep before shuttle pickup.</div>
+        <div class="place-note">📍 Multiple locations downtown</div>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-color-bar bar-maroon"></div>
+      <div class="place-body">
+        <span class="must-badge">ABQ Staple</span>
+        <div class="place-name">Flying Star Cafe</div>
+        <div class="place-desc">A beloved local chain with fantastic baked goods, strong coffee, and hearty breakfast/lunch options. Relaxed, welcoming atmosphere — great for an informal meeting or a solo working session.</div>
+        <div class="place-note">📍 Several ABQ locations</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Workshop venues callout -->
+  <div class="workshop-mentions">
+    <h3>📌 Key Workshop Locations</h3>
+    <p>These are the primary venues for the June 4–5 program. Save them to your maps app before you arrive.</p>
+    <div class="venue-tags">
+      <div class="venue-tag">
+        Hotel Chaco
+        <span>2000 Bellamah Ave NW — Your hotel base</span>
+      </div>
+      <div class="venue-tag">
+        UNM Cancer Center
+        <span>1201 Camino de Salud NE — Workshop sessions</span>
+      </div>
+      <div class="venue-tag">
+        Campo at Los Poblanos
+        <span>4803 Rio Grande Blvd NW — Day 1 dinner</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

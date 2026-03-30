@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Points of Contact | 2026 Emerging Leaders Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --maroon: #8B1A1A;
+    --teal: #006B77;
+    --gold: #C9A84C;
+    --cream: #FAF7F2;
+    --dark: #1A1A1A;
+    --mid: #4A4A4A;
+    --light: #F0EDE8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--dark); }
+
+  .topnav {
+    background: var(--maroon);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .topnav a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; }
+  .topnav a:hover { color: white; }
+  .topnav .sep { color: rgba(255,255,255,0.3); }
+  .topnav .current { color: white; font-weight: 600; }
+
+  .hero {
+    background: linear-gradient(135deg, #1A1A1A 0%, #2A1A1A 50%, var(--maroon) 100%);
+    padding: 70px 32px 60px;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); margin-bottom: 12px; font-weight: 600;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 44px);
+    font-weight: 900; color: white; margin-bottom: 14px;
+  }
+  .hero-sub { font-size: 16px; color: rgba(255,255,255,0.7); font-weight: 300; }
+
+  .content { max-width: 820px; margin: 0 auto; padding: 56px 32px 100px; }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--teal); text-decoration: none; font-size: 14px; font-weight: 600;
+    padding: 10px 0; margin-bottom: 36px; transition: gap 0.2s;
+  }
+  .back-link:hover { gap: 12px; }
+
+  .section-label {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--teal); font-weight: 600; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 700; color: var(--dark); margin-bottom: 8px;
+  }
+  .section-rule {
+    width: 48px; height: 3px;
+    background: linear-gradient(90deg, var(--maroon), var(--teal));
+    border-radius: 2px; margin-bottom: 40px;
+  }
+
+  /* Org headers */
+  .org-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    margin-top: 48px;
+  }
+  .org-tag {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 700; padding: 5px 14px; border-radius: 20px; white-space: nowrap;
+  }
+  .org-tag.maroon { background: var(--maroon); color: white; }
+  .org-tag.teal { background: var(--teal); color: white; }
+  .org-rule { flex: 1; height: 1px; background: #E0DAD4; }
+
+  /* Contact cards */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  .contact-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 3px 18px rgba(0,0,0,0.07);
+    border: 1.5px solid rgba(0,0,0,0.05);
+  }
+
+  .contact-card-top {
+    padding: 28px 28px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .contact-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .av-maroon { background: rgba(139,26,26,0.12); color: var(--maroon); }
+  .av-teal { background: rgba(0,107,119,0.12); color: var(--teal); }
+
+  .contact-name {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+  .contact-role {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.5;
+  }
+  .contact-badge {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+  .contact-badge.maroon { background: rgba(139,26,26,0.1); color: var(--maroon); }
+  .contact-badge.teal { background: rgba(0,107,119,0.1); color: var(--teal); }
+
+  .contact-card-footer {
+    border-top: 1px solid #F0EDE8;
+    padding: 16px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.2s;
+    border-radius: 8px;
+    padding: 6px 8px;
+    margin: -6px -8px;
+  }
+  .contact-item:hover { color: var(--teal); background: rgba(0,107,119,0.04); }
+  .contact-item .ci-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+  }
+  .ci-phone { background: rgba(139,26,26,0.08); }
+  .ci-email { background: rgba(0,107,119,0.08); }
+  .ci-loc { background: rgba(201,168,76,0.12); }
+
+  /* Disclaimer */
+  .disclaimer {
+    background: white;
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin-top: 56px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    border-left: 4px solid var(--gold);
+  }
+  .disclaimer h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+  .disclaimer p {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.75;
+  }
+
+  /* Info callout */
+  .info-callout {
+    background: linear-gradient(135deg, rgba(0,107,119,0.06), rgba(139,26,26,0.04));
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(0,0,0,0.06);
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="index.html">Home</a>
+  <span class="sep">›</span>
+  <span class="current">Points of Contact</span>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">2026 Emerging Leaders Workshop</p>
+  <h1>Points of Contact</h1>
+  <p class="hero-sub">Your go-to staff contacts for the 2026 Emerging Leaders Workshop.</p>
+</section>
+
+<div class="content">
+  <a href="index.html" class="back-link">← Back to Hub</a>
+
+  <p class="section-label">Staff Contacts</p>
+  <h2 class="section-title">Who to Reach</h2>
+  <div class="section-rule"></div>
+
+  <div class="info-callout">
+    Two staff contacts are available to support all workshop participants. For on-site questions and UNM-related logistics,
+    reach out to Rae Ann McMahan Paden. For coordination specific to the USC cohort, contact Grace Kukuk.
+  </div>
+
+  <!-- UNM -->
+  <div class="org-header">
+    <span class="org-tag maroon">UNM Comprehensive Cancer Center</span>
+    <div class="org-rule"></div>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-card-top">
+        <div class="contact-avatar av-maroon">RP</div>
+        <div>
+          <div class="contact-name">Rae Ann McMahan Paden</div>
+          <div class="contact-role">Associate Director, Research Administration and Community Relations</div>
+          <span class="contact-badge maroon">On site at UNM</span>
+        </div>
+      </div>
+      <div class="contact-card-footer">
+        <a class="contact-item" href="tel:5059250474">
+          <div class="contact-item ci-icon ci-phone">📞</div>
+          (505) 925-0474
+        </a>
+        <a class="contact-item" href="mailto:rpaden@salud.unm.edu">
+          <div class="contact-item ci-icon ci-email">✉️</div>
+          rpaden@salud.unm.edu
+        </a>
+        <div class="contact-item">
+          <div class="contact-item ci-icon ci-loc">📍</div>
+          UNM Comprehensive Cancer Center, Albuquerque, NM
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USC -->
+  <div class="org-header">
+    <span class="org-tag teal">USC Norris Comprehensive Cancer Center</span>
+    <div class="org-rule"></div>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-card-top">
+        <div class="contact-avatar av-teal">GK</div>
+        <div>
+          <div class="contact-name">Grace Kukuk</div>
+          <div class="contact-role">Program Manager, Office of Cancer Health Disparities and Cancer Research Training and Education Coordination</div>
+          <span class="contact-badge teal">USC Cohort Coordination</span>
+        </div>
+      </div>
+      <div class="contact-card-footer">
+        <a class="contact-item" href="tel:7578137379">
+          <div class="contact-item ci-icon ci-phone">📞</div>
+          (757) 813-7379
+        </a>
+        <a class="contact-item" href="mailto:gracezam@usc.edu">
+          <div class="contact-item ci-icon ci-email">✉️</div>
+          gracezam@usc.edu
+        </a>
+        <div class="contact-item">
+          <div class="contact-item ci-icon ci-loc">📍</div>
+          USC Norris Comprehensive Cancer Center, Los Angeles, CA
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leadership Contacts -->
+  <div class="org-header">
+    <span class="org-tag maroon">Leadership</span>
+    <div class="org-rule"></div>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-card-top">
+        <div class="contact-avatar av-teal">YS</div>
+        <div>
+          <div class="contact-name">Yolanda Sanchez, PhD</div>
+          <div class="contact-role">Director and CEO, UNM Comprehensive Cancer Center<br>Workshop Co-Lead</div>
+          <span class="contact-badge teal">UNM Host</span>
+        </div>
+      </div>
+      <div class="contact-card-footer">
+        <div class="contact-item">
+          <div class="contact-item ci-icon ci-email">✉️</div>
+          Contact via Rae Ann Paden
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <div class="contact-card-top">
+        <div class="contact-avatar av-maroon">CL</div>
+        <div>
+          <div class="contact-name">Caryn Lerman, PhD</div>
+          <div class="contact-role">Director, USC Norris Comprehensive Cancer Center<br>Workshop Co-Lead</div>
+          <span class="contact-badge maroon">USC Host</span>
+        </div>
+      </div>
+      <div class="contact-card-footer">
+        <div class="contact-item">
+          <div class="contact-item ci-icon ci-email">✉️</div>
+          Contact via Grace Kukuk
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photography Disclaimer -->
+  <div class="disclaimer">
+    <h3>📷 Photography & Videography Notice</h3>
+    <p>
+      By attending the Changing the Face of Cancer Center Leadership Workshop, you may be subject to
+      photography or videography, which may be used by UNM and USC Norris Comprehensive Cancer Centers
+      to promote the program or other events. By attending, you agree to grant UNM and USC Norris the right
+      to use your likeness in any photography, videography, and/or materials — including, but not limited to,
+      the organizations' websites, newsletters, and communications.
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

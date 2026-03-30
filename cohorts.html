@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emerging Leaders Cohorts | 2026 Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --maroon: #8B1A1A;
+    --teal: #006B77;
+    --teal-light: #00939F;
+    --gold: #C9A84C;
+    --cream: #FAF7F2;
+    --dark: #1A1A1A;
+    --mid: #4A4A4A;
+    --light: #F0EDE8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--dark); }
+
+  .topnav {
+    background: var(--maroon);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .topnav a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; }
+  .topnav a:hover { color: white; }
+  .topnav .sep { color: rgba(255,255,255,0.3); }
+  .topnav .current { color: white; font-weight: 600; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--teal) 0%, #004D57 50%, #002E35 100%);
+    padding: 70px 32px 60px;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.6); margin-bottom: 12px; font-weight: 600;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 44px);
+    font-weight: 900; color: white; margin-bottom: 14px;
+  }
+  .hero-sub { font-size: 16px; color: rgba(255,255,255,0.75); font-weight: 300; }
+
+  .content { max-width: 900px; margin: 0 auto; padding: 56px 32px 100px; }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--teal); text-decoration: none; font-size: 14px; font-weight: 600;
+    padding: 10px 0; margin-bottom: 36px; transition: gap 0.2s;
+  }
+  .back-link:hover { gap: 12px; }
+
+  /* Tab nav */
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid #E0DAD4;
+    margin-bottom: 40px;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 16px 12px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--mid);
+    transition: all 0.2s ease;
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
+  .tab-btn:hover { color: var(--dark); }
+  .tab-btn.active { color: var(--maroon); border-bottom-color: var(--maroon); }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Cohort header */
+  .cohort-header {
+    background: white;
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin-bottom: 32px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border-left: 5px solid var(--maroon);
+  }
+  .cohort-num {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--maroon);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .cohort-header.teal .cohort-num { background: var(--teal); }
+  .cohort-header.gold .cohort-num { background: var(--gold); color: #333; }
+  .cohort-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 4px;
+  }
+  .cohort-header p { font-size: 14px; color: var(--mid); }
+
+  /* Member table/grid */
+  .member-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .member-card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px 22px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1.5px solid rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s;
+  }
+  .member-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+  .member-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700; flex-shrink: 0;
+  }
+  .av-maroon { background: rgba(139,26,26,0.12); color: var(--maroon); }
+  .av-teal { background: rgba(0,107,119,0.12); color: var(--teal); }
+  .av-gold { background: rgba(201,168,76,0.18); color: #7A5C00; }
+  .member-name { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 2px; }
+  .member-role { font-size: 12px; color: var(--mid); line-height: 1.4; }
+  .member-inst { font-size: 11px; color: var(--teal); font-weight: 600; margin-top: 2px; }
+
+  .empty-note {
+    background: white;
+    border-radius: 14px;
+    padding: 48px 32px;
+    text-align: center;
+    color: var(--mid);
+    font-size: 15px;
+    border: 2px dashed #DDD;
+  }
+  .empty-note .icon { font-size: 36px; display: block; margin-bottom: 12px; }
+  .empty-note strong { color: var(--dark); }
+
+  /* Legend */
+  .legend {
+    display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; font-size: 13px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; color: var(--mid); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="index.html">Home</a>
+  <span class="sep">›</span>
+  <span class="current">Emerging Leaders Cohorts</span>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">2026 Emerging Leaders Workshop</p>
+  <h1>Emerging Leaders Cohorts</h1>
+  <p class="hero-sub">Three cohorts. One community. Changing the face of cancer center leadership.</p>
+</section>
+
+<div class="content">
+  <a href="index.html" class="back-link">← Back to Hub</a>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('cohort3', this)">🌟 Cohort 3 — 2026</button>
+    <button class="tab-btn" onclick="showTab('cohort2', this)">Cohort 2 — 2025</button>
+    <button class="tab-btn" onclick="showTab('cohort1', this)">Cohort 1 — 2024</button>
+  </div>
+
+  <!-- COHORT 3: 2026 (current) -->
+  <div id="cohort3" class="tab-content active">
+    <div class="cohort-header">
+      <div class="cohort-num">3</div>
+      <div>
+        <h2>Cohort 3 · 2026</h2>
+        <p>June 4–5, 2026 · University of New Mexico Comprehensive Cancer Center · Albuquerque, NM</p>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--maroon)"></div> UNM participant</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div> USC participant</div>
+    </div>
+
+    <div class="empty-note">
+      <span class="icon">📋</span>
+      <strong>Cohort 3 roster coming soon.</strong><br>
+      Add participant names, titles, and institutions below to populate this section.<br>
+      <br>
+      <em style="font-size: 13px; opacity: 0.7;">Edit this file to add member cards — duplicate the .member-card blocks and update the details.</em>
+    </div>
+
+    <!-- TEMPLATE — duplicate and fill in for each attendee:
+    <div class="member-grid">
+      <div class="member-card">
+        <div class="member-avatar av-maroon">XX</div>
+        <div>
+          <div class="member-name">First Last, Degree</div>
+          <div class="member-role">Title / Role</div>
+          <div class="member-inst">Institution</div>
+        </div>
+      </div>
+    </div>
+    -->
+
+  </div>
+
+  <!-- COHORT 2: 2025 -->
+  <div id="cohort2" class="tab-content">
+    <div class="cohort-header teal">
+      <div class="cohort-num">2</div>
+      <div>
+        <h2>Cohort 2 · 2025</h2>
+        <p>2025 Emerging Leaders Workshop · USC Norris Comprehensive Cancer Center</p>
+      </div>
+    </div>
+
+    <div class="empty-note">
+      <span class="icon">📋</span>
+      <strong>Add Cohort 2 participants here.</strong><br>
+      Copy and paste the member-card template below and fill in names, roles, and institutions.
+    </div>
+
+    <!-- TEMPLATE — duplicate and fill in for each attendee:
+    <div class="member-grid">
+      <div class="member-card">
+        <div class="member-avatar av-teal">XX</div>
+        <div>
+          <div class="member-name">First Last, Degree</div>
+          <div class="member-role">Title / Role</div>
+          <div class="member-inst">Institution</div>
+        </div>
+      </div>
+    </div>
+    -->
+  </div>
+
+  <!-- COHORT 1: 2024 -->
+  <div id="cohort1" class="tab-content">
+    <div class="cohort-header gold">
+      <div class="cohort-num">1</div>
+      <div>
+        <h2>Cohort 1 · 2024</h2>
+        <p>2024 Emerging Leaders Workshop · Inaugural Cohort</p>
+      </div>
+    </div>
+
+    <div class="empty-note">
+      <span class="icon">📋</span>
+      <strong>Add Cohort 1 participants here.</strong><br>
+      Copy and paste the member-card template below and fill in names, roles, and institutions.
+    </div>
+
+    <!-- TEMPLATE — duplicate and fill in for each attendee:
+    <div class="member-grid">
+      <div class="member-card">
+        <div class="member-avatar av-gold">XX</div>
+        <div>
+          <div class="member-name">First Last, Degree</div>
+          <div class="member-role">Title / Role</div>
+          <div class="member-inst">Institution</div>
+        </div>
+      </div>
+    </div>
+    -->
+  </div>
+
+</div>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
