@@ -6,170 +6,68 @@
 <title>Emerging Leaders Cohorts | 2026 Workshop</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --maroon: #8B1A1A;
-    --teal: #006B77;
-    --teal-light: #00939F;
-    --gold: #C9A84C;
-    --cream: #FAF7F2;
-    --dark: #1A1A1A;
-    --mid: #4A4A4A;
-    --light: #F0EDE8;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--dark); }
+  :root { --maroon:#8B1A1A; --teal:#006B77; --teal-light:#00939F; --gold:#C9A84C; --cream:#FAF7F2; --dark:#1A1A1A; --mid:#4A4A4A; --light:#F0EDE8; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Source Sans 3',sans-serif; background:var(--cream); color:var(--dark); }
 
-  .topnav {
-    background: var(--maroon);
-    padding: 14px 32px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    position: sticky; top: 0; z-index: 50;
-  }
-  .topnav a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; }
-  .topnav a:hover { color: white; }
-  .topnav .sep { color: rgba(255,255,255,0.3); }
-  .topnav .current { color: white; font-weight: 600; }
+  .topnav { background:var(--maroon); padding:14px 32px; display:flex; align-items:center; gap:12px; position:sticky; top:0; z-index:50; }
+  .topnav a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:13px; }
+  .topnav a:hover { color:white; }
+  .topnav .sep { color:rgba(255,255,255,0.3); }
+  .topnav .current { color:white; font-weight:600; }
 
-  .hero {
-    background: linear-gradient(135deg, var(--teal) 0%, #004D57 50%, #002E35 100%);
-    padding: 70px 32px 60px;
-    text-align: center;
-  }
-  .hero-eyebrow {
-    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
-    color: rgba(255,255,255,0.6); margin-bottom: 12px; font-weight: 600;
-  }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(26px, 5vw, 44px);
-    font-weight: 900; color: white; margin-bottom: 14px;
-  }
-  .hero-sub { font-size: 16px; color: rgba(255,255,255,0.75); font-weight: 300; }
+  .hero { background:linear-gradient(135deg,var(--teal) 0%,#004D57 50%,#002E35 100%); padding:70px 32px 60px; text-align:center; }
+  .hero-eyebrow { font-size:12px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-bottom:12px; font-weight:600; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(26px,5vw,44px); font-weight:900; color:white; margin-bottom:14px; }
+  .hero-sub { font-size:16px; color:rgba(255,255,255,0.75); font-weight:300; }
 
-  .content { max-width: 900px; margin: 0 auto; padding: 56px 32px 100px; }
+  .content { max-width:900px; margin:0 auto; padding:56px 32px 100px; }
+  .back-link { display:inline-flex; align-items:center; gap:8px; color:var(--teal); text-decoration:none; font-size:14px; font-weight:600; padding:10px 0; margin-bottom:36px; transition:gap 0.2s; }
+  .back-link:hover { gap:12px; }
 
-  .back-link {
-    display: inline-flex; align-items: center; gap: 8px;
-    color: var(--teal); text-decoration: none; font-size: 14px; font-weight: 600;
-    padding: 10px 0; margin-bottom: 36px; transition: gap 0.2s;
-  }
-  .back-link:hover { gap: 12px; }
+  /* TABS */
+  .tabs { display:flex; gap:0; border-bottom:2px solid #E0DAD4; margin-bottom:40px; }
+  .tab-btn { flex:1; padding:16px 12px; background:none; border:none; border-bottom:3px solid transparent; margin-bottom:-2px; cursor:pointer; font-family:'Source Sans 3',sans-serif; font-size:14px; font-weight:600; color:var(--mid); transition:all 0.2s; text-align:center; }
+  .tab-btn:hover { color:var(--dark); }
+  .tab-btn.active { color:var(--maroon); border-bottom-color:var(--maroon); }
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
 
-  /* Tab nav */
-  .tabs {
-    display: flex;
-    gap: 0;
-    border-bottom: 2px solid #E0DAD4;
-    margin-bottom: 40px;
-  }
-  .tab-btn {
-    flex: 1;
-    padding: 16px 12px;
-    background: none;
-    border: none;
-    border-bottom: 3px solid transparent;
-    margin-bottom: -2px;
-    cursor: pointer;
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--mid);
-    transition: all 0.2s ease;
-    text-align: center;
-    letter-spacing: 0.3px;
-  }
-  .tab-btn:hover { color: var(--dark); }
-  .tab-btn.active { color: var(--maroon); border-bottom-color: var(--maroon); }
+  /* COHORT HEADER */
+  .cohort-header { background:white; border-radius:16px; padding:28px 32px; margin-bottom:28px; box-shadow:0 2px 16px rgba(0,0,0,0.05); display:flex; align-items:center; gap:20px; border-left:5px solid var(--maroon); }
+  .cohort-header.teal { border-left-color:var(--teal); }
+  .cohort-header.gold { border-left-color:var(--gold); }
+  .cohort-num { width:60px; height:60px; border-radius:50%; background:var(--maroon); color:white; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:22px; font-weight:900; flex-shrink:0; }
+  .cohort-header.teal .cohort-num { background:var(--teal); }
+  .cohort-header.gold .cohort-num { background:var(--gold); color:#333; }
+  .cohort-header h2 { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:var(--dark); margin-bottom:4px; }
+  .cohort-header p { font-size:13.5px; color:var(--mid); }
 
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
+  /* LEGEND */
+  .legend { display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px; font-size:13px; }
+  .legend-item { display:flex; align-items:center; gap:8px; color:var(--mid); }
+  .legend-dot { width:10px; height:10px; border-radius:50%; }
 
-  /* Cohort header */
-  .cohort-header {
-    background: white;
-    border-radius: 16px;
-    padding: 32px 36px;
-    margin-bottom: 32px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    border-left: 5px solid var(--maroon);
-  }
-  .cohort-num {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: var(--maroon);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 900;
-    flex-shrink: 0;
-  }
-  .cohort-header.teal .cohort-num { background: var(--teal); }
-  .cohort-header.gold .cohort-num { background: var(--gold); color: #333; }
-  .cohort-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 4px;
-  }
-  .cohort-header p { font-size: 14px; color: var(--mid); }
+  /* SECTION DIVIDER */
+  .inst-label { font-size:11px; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:var(--mid); margin:24px 0 12px; padding-bottom:6px; border-bottom:1px solid #E0DAD4; }
 
-  /* Member table/grid */
-  .member-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 16px;
-    margin-bottom: 40px;
-  }
-  .member-card {
-    background: white;
-    border-radius: 14px;
-    padding: 20px 22px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    border: 1.5px solid rgba(0,0,0,0.05);
-    transition: box-shadow 0.2s;
-  }
-  .member-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
-  .member-avatar {
-    width: 44px; height: 44px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 16px; font-weight: 700; flex-shrink: 0;
-  }
-  .av-maroon { background: rgba(139,26,26,0.12); color: var(--maroon); }
-  .av-teal { background: rgba(0,107,119,0.12); color: var(--teal); }
-  .av-gold { background: rgba(201,168,76,0.18); color: #7A5C00; }
-  .member-name { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 2px; }
-  .member-role { font-size: 12px; color: var(--mid); line-height: 1.4; }
-  .member-inst { font-size: 11px; color: var(--teal); font-weight: 600; margin-top: 2px; }
+  /* MEMBER GRID */
+  .member-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px; margin-bottom:8px; }
+  .member-card { background:white; border-radius:12px; padding:18px 20px; box-shadow:0 2px 12px rgba(0,0,0,0.05); display:flex; align-items:flex-start; gap:14px; border:1.5px solid rgba(0,0,0,0.05); transition:box-shadow 0.2s; }
+  .member-card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.1); }
+  .member-avatar { width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:15px; font-weight:700; flex-shrink:0; }
+  .av-maroon { background:rgba(139,26,26,0.12); color:var(--maroon); }
+  .av-teal { background:rgba(0,107,119,0.12); color:var(--teal); }
+  .av-gold { background:rgba(201,168,76,0.18); color:#7A5C00; }
+  .member-name { font-size:14px; font-weight:600; color:var(--dark); margin-bottom:2px; }
+  .member-role { font-size:12px; color:var(--mid); line-height:1.4; }
+  .member-email { font-size:11.5px; color:var(--teal); margin-top:4px; text-decoration:none; }
+  .member-email:hover { text-decoration:underline; }
+  .member-inst { font-size:11px; color:var(--teal); font-weight:600; margin-top:2px; }
 
-  .empty-note {
-    background: white;
-    border-radius: 14px;
-    padding: 48px 32px;
-    text-align: center;
-    color: var(--mid);
-    font-size: 15px;
-    border: 2px dashed #DDD;
-  }
-  .empty-note .icon { font-size: 36px; display: block; margin-bottom: 12px; }
-  .empty-note strong { color: var(--dark); }
-
-  /* Legend */
-  .legend {
-    display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; font-size: 13px;
-  }
-  .legend-item { display: flex; align-items: center; gap: 8px; color: var(--mid); }
-  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  /* PLACEHOLDER */
+  .empty-note { background:white; border-radius:14px; padding:40px 32px; text-align:center; color:var(--mid); font-size:15px; border:2px dashed #DDD; }
+  .empty-note .icon { font-size:32px; display:block; margin-bottom:10px; }
 </style>
 </head>
 <body>
@@ -189,12 +87,14 @@
   <a href="index.html" class="back-link">← Back to Hub</a>
 
   <div class="tabs">
-    <button class="tab-btn active" onclick="showTab('cohort3', this)">🌟 Cohort 3 — 2026</button>
-    <button class="tab-btn" onclick="showTab('cohort2', this)">Cohort 2 — 2025</button>
-    <button class="tab-btn" onclick="showTab('cohort1', this)">Cohort 1 — 2024</button>
+    <button class="tab-btn active" onclick="showTab('cohort3',this)">🌟 Cohort 3 — 2026</button>
+    <button class="tab-btn" onclick="showTab('cohort2',this)">Cohort 2 — 2025</button>
+    <button class="tab-btn" onclick="showTab('cohort1',this)">Cohort 1 — 2024</button>
   </div>
 
-  <!-- COHORT 3: 2026 (current) -->
+  <!-- ══════════════════════════════════════════
+       COHORT 3 — 2026 (current, to be populated)
+  ══════════════════════════════════════════ -->
   <div id="cohort3" class="tab-content active">
     <div class="cohort-header">
       <div class="cohort-num">3</div>
@@ -205,91 +105,399 @@
     </div>
 
     <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--maroon)"></div> UNM participant</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div> USC participant</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--maroon)"></div>UNM participant</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>USC participant</div>
     </div>
 
     <div class="empty-note">
       <span class="icon">📋</span>
       <strong>Cohort 3 roster coming soon.</strong><br>
-      Add participant names, titles, and institutions below to populate this section.<br>
-      <br>
-      <em style="font-size: 13px; opacity: 0.7;">Edit this file to add member cards — duplicate the .member-card blocks and update the details.</em>
+      Add participant names, titles, and institutions here once confirmed.<br><br>
+      <em style="font-size:13px;opacity:0.7;">To add members: duplicate the .member-card blocks below and update the details. Use av-maroon for UNM and av-teal for USC participants.</em>
     </div>
 
-    <!-- TEMPLATE — duplicate and fill in for each attendee:
+    <!-- TEMPLATE for adding Cohort 3 members — copy and paste this block for each person:
+    <div class="inst-label">UNM Comprehensive Cancer Center</div>
     <div class="member-grid">
       <div class="member-card">
         <div class="member-avatar av-maroon">XX</div>
         <div>
           <div class="member-name">First Last, Degree</div>
           <div class="member-role">Title / Role</div>
-          <div class="member-inst">Institution</div>
+          <a class="member-email" href="mailto:email@salud.unm.edu">email@salud.unm.edu</a>
         </div>
       </div>
     </div>
-    -->
 
-  </div>
-
-  <!-- COHORT 2: 2025 -->
-  <div id="cohort2" class="tab-content">
-    <div class="cohort-header teal">
-      <div class="cohort-num">2</div>
-      <div>
-        <h2>Cohort 2 · 2025</h2>
-        <p>2025 Emerging Leaders Workshop · USC Norris Comprehensive Cancer Center</p>
-      </div>
-    </div>
-
-    <div class="empty-note">
-      <span class="icon">📋</span>
-      <strong>Add Cohort 2 participants here.</strong><br>
-      Copy and paste the member-card template below and fill in names, roles, and institutions.
-    </div>
-
-    <!-- TEMPLATE — duplicate and fill in for each attendee:
+    <div class="inst-label">USC Norris Comprehensive Cancer Center</div>
     <div class="member-grid">
       <div class="member-card">
         <div class="member-avatar av-teal">XX</div>
         <div>
           <div class="member-name">First Last, Degree</div>
           <div class="member-role">Title / Role</div>
-          <div class="member-inst">Institution</div>
+          <a class="member-email" href="mailto:email@med.usc.edu">email@med.usc.edu</a>
         </div>
       </div>
     </div>
     -->
   </div>
 
-  <!-- COHORT 1: 2024 -->
+  <!-- ══════════════════════════════════════════
+       COHORT 2 — 2025 (USC-hosted, Pasadena)
+  ══════════════════════════════════════════ -->
+  <div id="cohort2" class="tab-content">
+    <div class="cohort-header teal">
+      <div class="cohort-num">2</div>
+      <div>
+        <h2>Cohort 2 · 2025</h2>
+        <p>June 12–13, 2025 · USC Norris Comprehensive Cancer Center · Los Angeles, CA</p>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--maroon)"></div>UNM participant</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>USC participant</div>
+    </div>
+
+    <!-- USC participants -->
+    <div class="inst-label">USC Norris Comprehensive Cancer Center</div>
+    <div class="member-grid">
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">SA</div>
+        <div>
+          <div class="member-name">Sandra Algaze, MD</div>
+          <div class="member-role">Assistant Professor, Clinical Medicine, Division of Medical Oncology – Gastrointestinal<br>Director, GI Oncology Clinic at LA General</div>
+          <a class="member-email" href="mailto:sandra.algaze@med.usc.edu">sandra.algaze@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">JE</div>
+        <div>
+          <div class="member-name">Juliet Emamaullee, MD, PhD</div>
+          <div class="member-role">Associate Professor, Surgery and Immunology<br>Research Director, Division of Abdominal Organ Transplantation at Children's Hospital LA</div>
+          <a class="member-email" href="mailto:juliet.emamaullee@med.usc.edu">juliet.emamaullee@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">AF</div>
+        <div>
+          <div class="member-name">Albert Farias, PhD</div>
+          <div class="member-role">Assistant Professor, Population and Public Health Sciences<br>Co-Director, PhD Program in Epidemiology · Assistant Director, CRTEC</div>
+          <a class="member-email" href="mailto:albert.farias@med.usc.edu">albert.farias@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">PG</div>
+        <div>
+          <div class="member-name">Patti Goldberger, MS</div>
+          <div class="member-role">Senior Business Officer II, USC Norris</div>
+          <a class="member-email" href="mailto:patti.goldberger@med.usc.edu">patti.goldberger@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">MG</div>
+        <div>
+          <div class="member-name">Mona Guo, MD</div>
+          <div class="member-role">Assistant Professor, Clinical Obstetrics and Gynecology<br>Associate Fellowship Director, Gynecologic Oncology</div>
+          <a class="member-email" href="mailto:mona.guo@med.usc.edu">mona.guo@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">AM</div>
+        <div>
+          <div class="member-name">Ashley Margol, MD</div>
+          <div class="member-role">Associate Professor, Clinical Pediatrics<br>Director, Brain Tumor Center & Pediatric Neuro-Oncology Program at Children's Hospital LA</div>
+          <a class="member-email" href="mailto:amargol@chla.usc.edu">amargol@chla.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">AM2</div>
+        <div>
+          <div class="member-name">Anastasia Martynova, MD</div>
+          <div class="member-role">Assistant Professor, Clinical Medicine, Breast Medical Oncology</div>
+          <a class="member-email" href="mailto:anastasia.martynova@med.usc.edu">anastasia.martynova@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">JN</div>
+        <div>
+          <div class="member-name">Josh Neman, PhD</div>
+          <div class="member-role">Associate Professor, Neurological Surgery<br>Director, PhD Program in Cancer Biology & Genomics · Scientific Director, Brain Tumor Center</div>
+          <a class="member-email" href="mailto:yebrahim@usc.edu">yebrahim@usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">MS</div>
+        <div>
+          <div class="member-name">Matthew Salomon, PhD</div>
+          <div class="member-role">Assistant Professor, Clinical Cancer Biology<br>Director, MS Program in Translational Biomedical Informatics</div>
+          <a class="member-email" href="mailto:msalomon@usc.edu">msalomon@usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">DS</div>
+        <div>
+          <div class="member-name">Daphne Stewart, MD</div>
+          <div class="member-role">Clinical Professor, Medicine<br>Section Chief, Women's Cancers, Division of Medical Oncology</div>
+          <a class="member-email" href="mailto:daphne.stewart@med.usc.edu">daphne.stewart@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">VT</div>
+        <div>
+          <div class="member-name">Varsha Tulpule, MD</div>
+          <div class="member-role">Assistant Professor, Clinical Medicine, Division of Medical Oncology – Genitourinary</div>
+          <a class="member-email" href="mailto:varsha.tulpule@med.usc.edu">varsha.tulpule@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">KZ</div>
+        <div>
+          <div class="member-name">Kali Zhou, MD</div>
+          <div class="member-role">Assistant Professor, Clinical Medicine, Division of Gastrointestinal and Liver Diseases</div>
+          <a class="member-email" href="mailto:kalizhou@usc.edu">kalizhou@usc.edu</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- UNM participants -->
+    <div class="inst-label">UNM Comprehensive Cancer Center</div>
+    <div class="member-grid">
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">DG</div>
+        <div>
+          <div class="member-name">Dolores Guest, PhD, RD</div>
+          <div class="member-role">Research Associate Professor<br>Director, Behavioral Measurement and Population Science Shared Resource</div>
+          <a class="member-email" href="mailto:dguest@salud.unm.edu">dguest@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">SS</div>
+        <div>
+          <div class="member-name">Sabrina Samudio-Ruiz, PhD</div>
+          <div class="member-role">Associate Director, Shared Resources</div>
+          <a class="member-email" href="mailto:sruiz@salud.unm.edu">sruiz@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">BT</div>
+        <div>
+          <div class="member-name">Bernard Tawfik, MD</div>
+          <div class="member-role">Associate Professor, Medical Oncology, Breast Specialty<br>Chair, Commission on Cancer · Lead, Neuroendocrine Theranostics Program</div>
+          <a class="member-email" href="mailto:btawfik@salud.unm.edu">btawfik@salud.unm.edu</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       COHORT 1 — 2024 (UNM-hosted, Albuquerque)
+  ══════════════════════════════════════════ -->
   <div id="cohort1" class="tab-content">
     <div class="cohort-header gold">
       <div class="cohort-num">1</div>
       <div>
         <h2>Cohort 1 · 2024</h2>
-        <p>2024 Emerging Leaders Workshop · Inaugural Cohort</p>
+        <p>June 10–12, 2024 · University of New Mexico Comprehensive Cancer Center · Albuquerque, NM</p>
       </div>
     </div>
 
-    <div class="empty-note">
-      <span class="icon">📋</span>
-      <strong>Add Cohort 1 participants here.</strong><br>
-      Copy and paste the member-card template below and fill in names, roles, and institutions.
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--maroon)"></div>UNM participant</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>USC participant</div>
     </div>
 
-    <!-- TEMPLATE — duplicate and fill in for each attendee:
+    <!-- UNM participants -->
+    <div class="inst-label">UNM Comprehensive Cancer Center</div>
     <div class="member-grid">
+
       <div class="member-card">
-        <div class="member-avatar av-gold">XX</div>
+        <div class="member-avatar av-maroon">PA</div>
         <div>
-          <div class="member-name">First Last, Degree</div>
-          <div class="member-role">Title / Role</div>
-          <div class="member-inst">Institution</div>
+          <div class="member-name">Prajakta Adsul, PhD</div>
+          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:padsul@salud.unm.edu">padsul@salud.unm.edu</a>
         </div>
       </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">EB</div>
+        <div>
+          <div class="member-name">Eric Bartee, PhD</div>
+          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:ebartee@salud.unm.edu">ebartee@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">EC</div>
+        <div>
+          <div class="member-name">Eliseo Castillo, PhD</div>
+          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:ecastillo@salud.unm.edu">ecastillo@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">JG</div>
+        <div>
+          <div class="member-name">Jennifer Gillette, PhD</div>
+          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:jgillette@salud.unm.edu">jgillette@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">NH</div>
+        <div>
+          <div class="member-name">Neda Hashemi, MD</div>
+          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:nhashemi@salud.unm.edu">nhashemi@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">DL</div>
+        <div>
+          <div class="member-name">David Lee, MD, PhD</div>
+          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:dylee@salud.unm.edu">dylee@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">SL</div>
+        <div>
+          <div class="member-name">Shuguang Leng, PhD</div>
+          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:sleng@salud.unm.edu">sleng@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">DL2</div>
+        <div>
+          <div class="member-name">Diane Lidke, PhD</div>
+          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:dlidke@salud.unm.edu">dlidke@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">PM</div>
+        <div>
+          <div class="member-name">Peng Mao, PhD</div>
+          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:pmao@salud.unm.edu">pmao@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">JN</div>
+        <div>
+          <div class="member-name">Jacklyn Nemunaitis, MD</div>
+          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:jnemunaitis@salud.unm.edu">jnemunaitis@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">VP</div>
+        <div>
+          <div class="member-name">Viswanathan Palanisamy, PhD</div>
+          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:vpalanisamy@salud.unm.edu">vpalanisamy@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-maroon">JV</div>
+        <div>
+          <div class="member-name">Jessica Valdez, MD, MPH, FAAP</div>
+          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:jmvaldez@salud.unm.edu">jmvaldez@salud.unm.edu</a>
+        </div>
+      </div>
+
     </div>
-    -->
+
+    <!-- USC participants -->
+    <div class="inst-label">USC Norris Comprehensive Cancer Center</div>
+    <div class="member-grid">
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">SA</div>
+        <div>
+          <div class="member-name">Sandra Algaze, MD</div>
+          <div class="member-role">Faculty, USC Norris Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:sandra.algaze@med.usc.edu">sandra.algaze@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">DH</div>
+        <div>
+          <div class="member-name">Diana Hanna, MD</div>
+          <div class="member-role">Faculty, USC Norris Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:diana.hanna@med.usc.edu">diana.hanna@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">RH</div>
+        <div>
+          <div class="member-name">Robert Hsu, MD</div>
+          <div class="member-role">Faculty, USC Norris Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:robert.hsu@med.usc.edu">robert.hsu@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">CS</div>
+        <div>
+          <div class="member-name">Claradina Soto, PhD</div>
+          <div class="member-role">Faculty, USC Norris Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:toya@usc.edu">toya@usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">ER</div>
+        <div>
+          <div class="member-name">Evanthia Roussos Torres, MD, PhD</div>
+          <div class="member-role">Faculty, USC Norris Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:evanthia.roussostorres@med.usc.edu">evanthia.roussostorres@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">JT</div>
+        <div>
+          <div class="member-name">Jennifer Tsui, PhD</div>
+          <div class="member-role">Faculty, USC Norris Comprehensive Cancer Center</div>
+          <a class="member-email" href="mailto:tsuijenn@usc.edu">tsuijenn@usc.edu</a>
+        </div>
+      </div>
+
+    </div>
   </div>
 
 </div>
