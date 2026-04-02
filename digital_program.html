@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Program | 2026 Emerging Leaders Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ─── Tokens ─────────────────────────────────────────────────── */
+:root {
+  --maroon:#8B1A1A; --teal:#006B77; --teal-light:#00939F;
+  --gold:#C9A84C;   --cream:#FAF7F2; --dark:#1A1A1A;
+  --mid:#4A4A4A;    --light:#F0EDE8;
+  --r:16px;
+}
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:16px; scroll-behavior:smooth; }
+body { font-family:'Source Sans 3',sans-serif; background:var(--cream); color:var(--dark); line-height:1.7; -webkit-text-size-adjust:100%; }
+
+/* ─── Top nav ────────────────────────────────────────────────── */
+.topnav { background:var(--maroon); padding:0 20px; height:52px; display:flex; align-items:center; gap:10px; position:sticky; top:0; z-index:200; }
+.topnav a { color:rgba(255,255,255,0.75); text-decoration:none; font-size:14px; min-height:44px; display:inline-flex; align-items:center; padding:0 2px; }
+.topnav a:hover,.topnav a:focus { color:white; text-decoration:underline; }
+.topnav .sep { color:rgba(255,255,255,0.3); }
+.topnav .current { color:white; font-weight:600; }
+
+/* ─── Hero ───────────────────────────────────────────────────── */
+.hero {
+  background:linear-gradient(135deg,var(--maroon) 0%,#5A1010 50%,var(--teal) 100%);
+  padding:clamp(48px,8vw,80px) 20px clamp(40px,7vw,70px);
+  text-align:center; position:relative; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-eyebrow { position:relative; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.65); margin-bottom:12px; font-weight:600; }
+.hero h1 { position:relative; font-family:'Playfair Display',serif; font-size:clamp(26px,6vw,48px); font-weight:900; color:white; line-height:1.2; margin-bottom:14px; }
+.hero-sub { position:relative; font-size:clamp(14px,3vw,16px); color:rgba(255,255,255,0.8); font-weight:300; max-width:540px; margin:0 auto; }
+.hero-meta { position:relative; margin-top:24px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+.hero-tag { background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); color:white; font-size:12px; padding:6px 14px; border-radius:20px; }
+
+/* ─── Jump navigation ────────────────────────────────────────── */
+.jump-nav {
+  background:white; border-bottom:2px solid var(--light);
+  position:sticky; top:52px; z-index:150;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.jump-nav::-webkit-scrollbar { display:none; }
+.jump-nav-inner {
+  display:flex; align-items:stretch; gap:0;
+  max-width:860px; margin:0 auto; padding:0 clamp(8px,3vw,20px);
+  white-space:nowrap;
+}
+.jump-nav-inner a {
+  display:inline-flex; align-items:center;
+  padding:14px 16px; font-size:13px; font-weight:600;
+  color:var(--mid); text-decoration:none;
+  border-bottom:3px solid transparent; margin-bottom:-2px;
+  transition:color .15s, border-color .15s;
+  white-space:nowrap; min-height:44px;
+}
+.jump-nav-inner a:hover,.jump-nav-inner a:focus { color:var(--maroon); }
+.jump-nav-inner a.active { color:var(--maroon); border-bottom-color:var(--maroon); }
+
+/* ─── Layout ─────────────────────────────────────────────────── */
+.content { max-width:860px; margin:0 auto; padding:clamp(40px,6vw,64px) clamp(16px,4vw,32px) 80px; }
+.section-label { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--teal); font-weight:600; margin-bottom:8px; }
+.section-title { font-family:'Playfair Display',serif; font-size:clamp(22px,4vw,30px); font-weight:700; color:var(--dark); margin-bottom:8px; }
+.section-rule { width:48px; height:3px; background:linear-gradient(90deg,var(--maroon),var(--teal)); border-radius:2px; margin-bottom:32px; }
+.section-block { margin-bottom:64px; }
+
+/* ─── About block ────────────────────────────────────────────── */
+.about-block { background:white; border-radius:var(--r); padding:clamp(24px,5vw,48px); box-shadow:0 4px 24px rgba(0,0,0,0.06); border-left:5px solid var(--teal); font-size:clamp(15px,2.5vw,17px); line-height:1.85; color:var(--mid); }
+.about-block p+p { margin-top:18px; }
+.about-block strong { color:var(--dark); }
+
+/* ─── Objectives ─────────────────────────────────────────────── */
+.objectives-block { background:white; border-radius:var(--r); padding:clamp(24px,5vw,40px); box-shadow:0 4px 24px rgba(0,0,0,0.06); }
+.objectives-block h2 { font-family:'Playfair Display',serif; font-size:clamp(18px,3vw,22px); font-weight:700; color:var(--dark); margin-bottom:20px; }
+.obj-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px; }
+.obj-row { display:flex; align-items:flex-start; gap:12px; padding:14px 16px; background:var(--cream); border-radius:10px; }
+.obj-emoji { font-size:20px; flex-shrink:0; line-height:1.4; }
+.obj-text { font-size:14px; line-height:1.55; }
+.obj-text strong { display:block; font-weight:600; color:var(--dark); margin-bottom:2px; }
+.obj-text span { font-size:13px; color:var(--mid); }
+
+/* ─── Speaker cards ──────────────────────────────────────────── */
+.speakers-list { display:flex; flex-direction:column; gap:28px; }
+.speaker-card { background:white; border-radius:var(--r); box-shadow:0 4px 24px rgba(0,0,0,0.06); border-top:3px solid var(--teal); overflow:hidden; }
+.speaker-card.maroon-accent { border-top-color:var(--maroon); }
+.speaker-card.gold-accent { border-top-color:var(--gold); }
+.speaker-inner { padding:clamp(20px,4vw,32px); }
+.speaker-header { display:flex; align-items:flex-start; gap:clamp(14px,3vw,24px); margin-bottom:20px; }
+.speaker-photo { width:clamp(80px,15vw,104px); height:clamp(80px,15vw,104px); border-radius:50%; object-fit:cover; object-position:center top; flex-shrink:0; box-shadow:0 2px 12px rgba(0,0,0,0.18); }
+.speaker-photo.maroon-ring { outline:3px solid var(--maroon); outline-offset:3px; }
+.speaker-photo.teal-ring   { outline:3px solid var(--teal);   outline-offset:3px; }
+.speaker-photo.gold-ring   { outline:3px solid var(--gold);   outline-offset:3px; }
+.speaker-header-text { flex:1; min-width:0; }
+.speaker-name { font-family:'Playfair Display',serif; font-size:clamp(17px,3vw,22px); font-weight:700; color:var(--dark); margin-bottom:6px; }
+.speaker-titles { display:flex; flex-direction:column; gap:3px; }
+.speaker-title-item { font-size:clamp(11.5px,2vw,13px); color:var(--teal); font-weight:600; line-height:1.4; }
+.speaker-divider { width:32px; height:2px; background:var(--maroon); border-radius:2px; margin-bottom:16px; }
+.speaker-bio { font-size:clamp(14px,2.5vw,15px); color:var(--mid); line-height:1.8; }
+.speaker-bio p+p { margin-top:12px; }
+.speaker-bio strong { color:var(--dark); }
+@media(max-width:400px){
+  .speaker-header { flex-direction:column; align-items:center; text-align:center; }
+  .speaker-titles { align-items:center; }
+}
+
+/* ─── Action items ───────────────────────────────────────────── */
+.action-section { background:white; border-radius:var(--r); box-shadow:0 4px 24px rgba(0,0,0,0.07); border-top:4px solid var(--gold); overflow:hidden; }
+.action-header { padding:clamp(20px,4vw,32px) clamp(20px,4vw,36px) 0; }
+.action-header h2 { font-family:'Playfair Display',serif; font-size:clamp(18px,3vw,22px); font-weight:700; color:var(--dark); margin-bottom:6px; }
+.action-header p { font-size:13.5px; color:var(--mid); margin-bottom:20px; }
+.tab-strip { display:flex; border-bottom:2px solid var(--light); padding:0 clamp(20px,4vw,36px); }
+.tab-btn { background:none; border:none; cursor:pointer; font-family:'Source Sans 3',sans-serif; font-size:clamp(13px,2.5vw,14px); font-weight:600; color:var(--mid); padding:12px 16px; border-bottom:3px solid transparent; margin-bottom:-2px; min-height:44px; transition:color .15s,border-color .15s; }
+.tab-btn:hover { color:var(--dark); }
+.tab-btn.active { color:var(--maroon); border-bottom-color:var(--maroon); }
+.tab-btn:focus-visible { outline:3px solid var(--teal); outline-offset:2px; border-radius:4px; }
+.tab-panels { padding:clamp(20px,4vw,28px) clamp(20px,4vw,36px) clamp(20px,4vw,32px); }
+.tab-panel { display:none; flex-direction:column; gap:14px; }
+.tab-panel.active { display:flex; }
+.action-item { display:flex; align-items:flex-start; gap:12px; background:var(--cream); border-radius:12px; padding:14px 18px; }
+.action-badge { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:20px; white-space:nowrap; flex-shrink:0; margin-top:3px; }
+.badge-deadline { background:var(--maroon); color:white; }
+.badge-asap { background:var(--dark); color:white; }
+.action-item-text { font-size:clamp(13.5px,2.5vw,14.5px); color:var(--dark); line-height:1.6; }
+.action-item-text strong { color:var(--maroon); }
+.action-item-text .sub { display:block; font-size:clamp(12px,2vw,13px); color:var(--mid); margin-top:4px; line-height:1.65; }
+.action-item-text a { color:var(--teal); font-weight:600; }
+.usc-note { background:rgba(0,107,119,0.07); border-left:4px solid var(--teal); border-radius:12px; padding:16px 18px; }
+.usc-note-label { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--teal); margin-bottom:6px; }
+.usc-note-text { font-size:14px; color:var(--dark); line-height:1.65; }
+
+/* hotel form */
+.accordion { border:1.5px solid #E0DAD4; border-radius:12px; overflow:hidden; margin-top:10px; }
+.accordion-trigger { width:100%; display:flex; align-items:center; justify-content:space-between; background:var(--cream); border:none; cursor:pointer; font-family:'Source Sans 3',sans-serif; font-size:14px; font-weight:600; color:var(--dark); padding:14px 18px; text-align:left; min-height:44px; transition:background .15s; }
+.accordion-trigger:hover { background:#EAE6E0; }
+.accordion-chevron { font-size:12px; color:var(--mid); transition:transform .25s; }
+.accordion-trigger[aria-expanded="true"] .accordion-chevron { transform:rotate(180deg); }
+.accordion-body { display:none; padding:20px 18px; border-top:1px solid #E0DAD4; background:white; }
+.accordion-trigger[aria-expanded="true"] + .accordion-body { display:block; }
+.hotel-form { display:flex; flex-direction:column; gap:16px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media(max-width:480px){ .form-row { grid-template-columns:1fr; } }
+.form-group { display:flex; flex-direction:column; gap:5px; }
+.form-group label { font-size:13px; font-weight:600; color:var(--dark); }
+.form-group input,.form-group select,.form-group textarea { font-family:'Source Sans 3',sans-serif; font-size:14px; color:var(--dark); background:var(--cream); border:1.5px solid #D0CBC4; border-radius:8px; padding:10px 12px; width:100%; transition:border-color .15s; min-height:44px; }
+.form-group textarea { min-height:80px; resize:vertical; }
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus { outline:none; border-color:var(--teal); box-shadow:0 0 0 3px rgba(0,107,119,0.15); }
+.form-coverage { background:rgba(0,107,119,0.07); border-left:3px solid var(--teal); border-radius:0 8px 8px 0; padding:10px 14px; font-size:12.5px; color:var(--mid); line-height:1.6; margin-bottom:4px; }
+.form-coverage strong { color:var(--teal); }
+.form-submit { background:var(--maroon); color:white; border:none; cursor:pointer; font-family:'Source Sans 3',sans-serif; font-size:15px; font-weight:700; padding:14px 28px; border-radius:22px; min-height:44px; transition:background .2s; align-self:flex-start; }
+.form-submit:hover { background:#A52020; }
+.form-success { display:none; background:rgba(0,107,119,0.08); border:1.5px solid var(--teal); border-radius:10px; padding:14px 18px; font-size:14px; color:var(--teal); font-weight:600; }
+
+/* ─── Prework banner ─────────────────────────────────────────── */
+.prework-banner { background:white; border:1.5px solid var(--teal); border-radius:14px; padding:24px 28px; display:flex; align-items:flex-start; gap:20px; margin-bottom:20px; }
+.prework-icon { font-size:32px; flex-shrink:0; margin-top:2px; }
+.prework-label { font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--teal); font-weight:600; margin-bottom:4px; }
+.prework-title { font-size:16px; font-weight:600; color:var(--dark); margin-bottom:4px; }
+.prework-desc { font-size:13.5px; color:var(--mid); }
+
+/* ─── Schedule / Timeline ────────────────────────────────────── */
+.schedule-intro { font-size:14px; color:var(--mid); margin-bottom:36px; line-height:1.6; }
+.day-section { margin-bottom:56px; }
+.day-header { display:flex; align-items:center; gap:14px; margin-bottom:24px; }
+.day-pill { font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:7px 18px; border-radius:24px; white-space:nowrap; background:var(--maroon); color:white; }
+.day-pill.teal { background:var(--teal); }
+.day-pill.gold { background:var(--gold); color:#333; }
+.day-title { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--dark); }
+.day-rule { flex:1; height:1px; background:#E0DAD4; }
+
+.timeline { position:relative; padding-left:80px; }
+.timeline::before { content:''; position:absolute; left:40px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom,var(--maroon),var(--teal)); border-radius:2px; opacity:0.2; }
+.timeline-item { position:relative; margin-bottom:16px; }
+.time-label { position:absolute; left:-80px; top:12px; width:64px; text-align:right; font-size:12px; font-weight:600; color:var(--mid); line-height:1.3; }
+.timeline-dot { position:absolute; left:-44px; top:16px; width:10px; height:10px; border-radius:50%; background:var(--maroon); border:2px solid white; box-shadow:0 0 0 2px var(--maroon); flex-shrink:0; }
+.timeline-dot.teal { background:var(--teal); box-shadow:0 0 0 2px var(--teal); }
+.timeline-dot.gold { background:var(--gold); box-shadow:0 0 0 2px var(--gold); }
+.timeline-dot.mid  { background:#CCC;         box-shadow:0 0 0 2px #CCC; }
+.timeline-card { background:white; border-radius:12px; padding:16px 20px; box-shadow:0 2px 10px rgba(0,0,0,0.05); border-left:3px solid transparent; }
+.timeline-card.maroon { border-left-color:var(--maroon); }
+.timeline-card.teal   { border-left-color:var(--teal); }
+.timeline-card.gold   { border-left-color:var(--gold); }
+.timeline-card.neutral{ border-left-color:#DDD; background:#FAFAFA; }
+.session-title   { font-weight:600; font-size:15px; color:var(--dark); margin-bottom:4px; }
+.session-desc    { font-size:13.5px; color:var(--mid); line-height:1.6; margin-bottom:6px; }
+.session-speaker { font-size:12.5px; color:var(--teal); font-weight:600; }
+.info-box { background:rgba(0,107,119,0.06); border:1px solid rgba(0,107,119,0.15); border-radius:10px; padding:12px 16px; margin-top:8px; font-size:13px; color:var(--mid); line-height:1.65; }
+.info-box strong { color:var(--dark); }
+.info-box.gold-box   { background:rgba(201,168,76,0.08); border-color:rgba(201,168,76,0.25); }
+.info-box.maroon-box { background:rgba(139,26,26,0.06); border-color:rgba(139,26,26,0.15); }
+.info-box a { color:var(--teal); font-weight:600; }
+
+/* ─── Evaluation cards ───────────────────────────────────────── */
+.eval-inline { display:flex; gap:14px; margin-top:32px; flex-wrap:wrap; }
+.eval-card { flex:1; min-width:200px; border-radius:14px; padding:22px; text-align:center; }
+.eval-card.maroon-card { background:var(--maroon); color:white; }
+.eval-card.teal-card   { background:var(--teal);   color:white; }
+.eval-card h3 { font-size:15px; font-weight:700; margin-bottom:6px; }
+.eval-card p  { font-size:13px; opacity:0.85; margin-bottom:12px; }
+.eval-card a  { display:inline-block; background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3); color:white; text-decoration:none; font-size:13px; font-weight:600; padding:7px 18px; border-radius:20px; min-height:44px; line-height:2.1; }
+.eval-card a:hover { background:rgba(255,255,255,0.3); }
+
+/* ─── Details block ──────────────────────────────────────────── */
+.details-block { background:white; border-radius:var(--r); padding:clamp(20px,4vw,32px); box-shadow:0 4px 24px rgba(0,0,0,0.06); border-left:5px solid var(--gold); }
+.details-block h2 { font-family:'Playfair Display',serif; font-size:clamp(18px,3vw,22px); font-weight:700; color:var(--dark); margin-bottom:16px; }
+.detail-row { display:flex; align-items:flex-start; gap:12px; font-size:clamp(14px,2.5vw,15px); color:var(--mid); padding:8px 0; border-bottom:1px solid var(--light); }
+.detail-row:last-child { border-bottom:none; }
+.detail-icon { font-size:18px; flex-shrink:0; line-height:1.6; }
+.detail-text strong { color:var(--dark); }
+
+/* ─── Photo notice ───────────────────────────────────────────── */
+.release-notice { background:white; border-radius:var(--r); padding:clamp(20px,4vw,32px) clamp(20px,4vw,36px); box-shadow:0 2px 12px rgba(0,0,0,0.05); border-left:4px solid var(--gold); }
+.release-notice p { font-size:clamp(13px,2vw,14px); color:var(--mid); line-height:1.75; }
+
+/* ─── Back to top button ─────────────────────────────────────── */
+#back-top { position:fixed; bottom:24px; right:20px; background:var(--maroon); color:white; border:none; width:44px; height:44px; border-radius:50%; font-size:20px; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.2); opacity:0; pointer-events:none; transition:opacity .3s; z-index:100; display:flex; align-items:center; justify-content:center; }
+#back-top.visible { opacity:1; pointer-events:auto; }
+#back-top:hover { background:#A52020; }
+
+/* ─── Responsive tweaks ──────────────────────────────────────── */
+@media(max-width:560px){
+  .timeline { padding-left:60px; }
+  .time-label { left:-60px; width:48px; font-size:11px; }
+  .timeline-dot { left:-32px; }
+  .timeline::before { left:28px; }
+}
+a:focus-visible { outline:3px solid var(--teal); outline-offset:3px; border-radius:4px; }
+</style>
+</head>
+<body>
+
+<!-- Top nav -->
+<nav class="topnav" aria-label="Site navigation">
+  <a href="index.html">Home</a>
+  <span class="sep" aria-hidden="true">›</span>
+  <span class="current" aria-current="page">Digital Program</span>
+</nav>
+
+<!-- Hero -->
+<section class="hero" aria-labelledby="hero-title">
+  <p class="hero-eyebrow">2026 Emerging Leaders Workshop</p>
+  <h1 id="hero-title">Digital Program</h1>
+  <p class="hero-sub">Changing the Face of Cancer Center Leadership</p>
+  <div class="hero-meta" aria-label="Event details">
+    <span class="hero-tag">June 4–5, 2026</span>
+    <span class="hero-tag">Albuquerque, NM</span>
+    <span class="hero-tag">UNM Comprehensive Cancer Center</span>
+  </div>
+</section>
+
+<!-- Jump navigation -->
+<nav class="jump-nav" aria-label="Page sections">
+  <div class="jump-nav-inner">
+    <a href="#about"      data-section="about">About</a>
+    <a href="#objectives" data-section="objectives">Objectives</a>
+    <a href="#speakers"   data-section="speakers">Speakers</a>
+    <a href="#action"     data-section="action">Action Items</a>
+    <a href="#schedule"   data-section="schedule">Schedule</a>
+    <a href="#details"    data-section="details">Details</a>
+  </div>
+</nav>
+
+<main class="content">
+
+  <!-- ── 1. ABOUT ──────────────────────────────────────────────── -->
+  <section class="section-block" id="about" aria-labelledby="about-title">
+    <p class="section-label">About the Workshop</p>
+    <h2 class="section-title" id="about-title">Welcome</h2>
+    <div class="section-rule" aria-hidden="true"></div>
+    <div class="about-block">
+      <p>The <strong>2026 Emerging Leaders Workshop: Changing the Face of Cancer Center Leadership</strong> equips developing cancer center leaders with a foundation in leadership within the specific context of matrix comprehensive cancer centers.</p>
+      <p>The workshop curriculum cultivates leadership excellence and a deep understanding of organizational structure and strategy, exploring what it means to lead within a complex, matrixed institution navigating shared authority, interdisciplinary collaboration, and institutional mission.</p>
+      <p>In addition to skill-building, the workshop offers <strong>strengths identification</strong> through the CliftonStrengths Assessment, <strong>unique networking and team-building opportunities</strong>, and concrete <strong>strategies for career advancement</strong> within NCI-designated cancer centers.</p>
+      <p>This workshop is a partnership between the <strong>University of New Mexico Comprehensive Cancer Center</strong> and <strong>USC Norris Comprehensive Cancer Center</strong>, two NCI-designated institutions committed to developing the next generation of diverse cancer center leaders.</p>
+    </div>
+  </section>
+
+  <!-- ── 2. OBJECTIVES ─────────────────────────────────────────── -->
+  <section class="section-block" id="objectives" aria-labelledby="obj-title">
+    <p class="section-label">What You'll Gain</p>
+    <h2 class="section-title" id="obj-title">Workshop Objectives</h2>
+    <div class="section-rule" aria-hidden="true"></div>
+    <div class="objectives-block">
+      <h2>Six Core Learning Goals</h2>
+      <div class="obj-grid" role="list">
+        <div class="obj-row" role="listitem"><span class="obj-emoji" aria-hidden="true">🧭</span><div class="obj-text"><strong>Leadership Foundation</strong><span>Build a framework for leading within matrix cancer centers.</span></div></div>
+        <div class="obj-row" role="listitem"><span class="obj-emoji" aria-hidden="true">💡</span><div class="obj-text"><strong>Strengths Identification</strong><span>Discover and apply your CliftonStrengths profile.</span></div></div>
+        <div class="obj-row" role="listitem"><span class="obj-emoji" aria-hidden="true">🤝</span><div class="obj-text"><strong>Networking and Mentoring</strong><span>Connect with peers and senior leaders across NCI centers.</span></div></div>
+        <div class="obj-row" role="listitem"><span class="obj-emoji" aria-hidden="true">📣</span><div class="obj-text"><strong>Persuasive Communication</strong><span>Level up your voice and advocacy for institutional impact.</span></div></div>
+        <div class="obj-row" role="listitem"><span class="obj-emoji" aria-hidden="true">🚀</span><div class="obj-text"><strong>Career Advancement</strong><span>Develop actionable strategies to grow your leadership.</span></div></div>
+        <div class="obj-row" role="listitem"><span class="obj-emoji" aria-hidden="true">🌍</span><div class="obj-text"><strong>Equity and Inclusion</strong><span>Advance health equity and diverse leadership in cancer research.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. SPEAKERS ───────────────────────────────────────────── -->
+  <section class="section-block" id="speakers" aria-labelledby="speakers-title">
+    <p class="section-label">Faculty</p>
+    <h2 class="section-title" id="speakers-title">Featured Speakers</h2>
+    <div class="section-rule" aria-hidden="true"></div>
+    <div class="speakers-list">
+
+      <!-- Caryn Lerman -->
+      <article class="speaker-card maroon-accent" aria-labelledby="sp-cl-name">
+        <div class="speaker-inner">
+          <div class="speaker-header">
+            <img src="speaker_1.jpg" class="speaker-photo maroon-ring" alt="Headshot of Dr. Caryn Lerman" loading="lazy">
+            <div class="speaker-header-text">
+              <h3 class="speaker-name" id="sp-cl-name">Caryn Lerman, PhD</h3>
+              <div class="speaker-titles">
+                <span class="speaker-title-item">Director, USC Norris Comprehensive Cancer Center</span>
+                <span class="speaker-title-item">Associate Dean for Cancer Programs</span>
+                <span class="speaker-title-item">H. Leslie and Elaine S. Hoffman Chair in Cancer Research</span>
+                <span class="speaker-title-item">USC Distinguished Professor, Keck School of Medicine</span>
+              </div>
+            </div>
+          </div>
+          <div class="speaker-divider" aria-hidden="true"></div>
+          <div class="speaker-bio">
+            <p>Dr. Caryn Lerman is nationally recognized for her cancer prevention research bridging neuroscience, genomics, pharmacology, and behavioral science. She has published over 380 peer-reviewed articles.</p>
+            <p>An elected member of the National Academy of Medicine, Dr. Lerman has served as President of the Association of American Cancer Institutes, member of the NCI Board of Scientific Advisors, the National Human Genome Research Advisory Council, and the National Institute on Drug Abuse Advisory Council.</p>
+            <p>Dr. Lerman is the former chair of the NCI Cancer Center Review Committee, where she played a pivotal role in evaluating NCI-designated cancer centers across the country.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Yolanda Sanchez -->
+      <article class="speaker-card" aria-labelledby="sp-ys-name">
+        <div class="speaker-inner">
+          <div class="speaker-header">
+            <img src="speaker_2.jpg" class="speaker-photo teal-ring" alt="Headshot of Dr. Yolanda Sanchez" loading="lazy">
+            <div class="speaker-header-text">
+              <h3 class="speaker-name" id="sp-ys-name">Yolanda Sanchez, PhD</h3>
+              <div class="speaker-titles">
+                <span class="speaker-title-item">Director and CEO, UNM Comprehensive Cancer Center</span>
+                <span class="speaker-title-item">The Maurice and Marguerite Liberman Distinguished Chair in Cancer Research</span>
+                <span class="speaker-title-item">Professor, Department of Internal Medicine</span>
+              </div>
+            </div>
+          </div>
+          <div class="speaker-divider" aria-hidden="true"></div>
+          <div class="speaker-bio">
+            <p>Dr. Yolanda (Yoli) Sanchez is the <strong>first Hispanic/Latin woman to lead an NCI-designated Comprehensive Cancer Center</strong>. She is an international expert in DNA damage response pathways.</p>
+            <p>Prior to joining UNM, Dr. Sanchez served as Associate Director of Basic Sciences at Dartmouth Cancer Center. As Director and CEO of UNMCCC, she oversees all cancer research and clinical programs across all UNM schools, colleges, departments, and facilities.</p>
+            <p>Dr. Sanchez collaborates with UNM and New Mexico's legislative and executive leadership to bring the latest cancer diagnostics and therapeutics to New Mexicans.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Chanita Hughes Halbert -->
+      <article class="speaker-card gold-accent" aria-labelledby="sp-ch-name">
+        <div class="speaker-inner">
+          <div class="speaker-header">
+            <img src="speaker_3.jpg" class="speaker-photo gold-ring" alt="Headshot of Dr. Chanita Hughes Halbert" loading="lazy">
+            <div class="speaker-header-text">
+              <h3 class="speaker-name" id="sp-ch-name">Chanita Hughes Halbert, PhD</h3>
+              <div class="speaker-titles">
+                <span class="speaker-title-item">Executive Vice Chair &amp; Vice Chair for Research; Distinguished Professor, Population and Public Health Sciences</span>
+                <span class="speaker-title-item">Dr. Arthur and Priscilla Ulene Chair in Women's Cancer, Keck School of Medicine</span>
+                <span class="speaker-title-item">Associate Director for Cancer Health Disparities, USC Norris</span>
+              </div>
+            </div>
+          </div>
+          <div class="speaker-divider" aria-hidden="true"></div>
+          <div class="speaker-bio">
+            <p>Dr. Chanita Hughes Halbert is renowned for her leadership in cancer prevention and minority health research, dedicating her career to reducing disparities in cancer outcomes affecting underrepresented communities.</p>
+            <p>She has identified sociocultural, psychological, genetic, and environmental determinants of cancer health disparities and translates this knowledge into evidence-based interventions to improve health equity among racially and ethnically diverse populations.</p>
+            <p>Elected to the National Academy of Medicine in 2017, she received the American Cancer Society's Cancer Control Award in 2010 and was appointed to the NCI Board of Scientific Advisors by President Obama in 2012.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- David Chow -->
+      <article class="speaker-card" aria-labelledby="sp-dc-name">
+        <div class="speaker-inner">
+          <div class="speaker-header">
+            <img src="speaker_4.jpg" class="speaker-photo teal-ring" alt="Headshot of David Chow" loading="lazy">
+            <div class="speaker-header-text">
+              <h3 class="speaker-name" id="sp-dc-name">David Chow, MA, MS, PCC</h3>
+              <div class="speaker-titles">
+                <span class="speaker-title-item">Leadership Development Executive Coach</span>
+                <span class="speaker-title-item">Founder, Leading Together and Trusted Advisor Associates, LLC</span>
+              </div>
+            </div>
+          </div>
+          <div class="speaker-divider" aria-hidden="true"></div>
+          <div class="speaker-bio">
+            <p>In 2004, David Chow founded Leading Together, providing executive coaching, leadership development, and organizational consulting. His passion is inspiring leaders toward personal mastery and psychological well-being.</p>
+            <p>A highly effective executive coach, David has coached hundreds of leaders from the C-Suite to emerging leaders across high-tech, biotech, healthcare, engineering, research/academia, government, and non-profit organizations.</p>
+            <p>David has designed and facilitated custom leadership programs worldwide on Authentic Leadership, Leading with Emotional Intelligence, Executive Presence, and Strengths-Based Leadership.</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ── 4. WHAT YOU NEED TO DO ────────────────────────────────── -->
+  <section class="section-block" id="action" aria-labelledby="action-title">
+    <p class="section-label">Before You Arrive</p>
+    <h2 class="section-title" id="action-title">What You Need to Do</h2>
+    <div class="section-rule" aria-hidden="true"></div>
+
+    <!-- Prework banner -->
+    <div class="prework-banner">
+      <div class="prework-icon" aria-hidden="true">📝</div>
+      <div>
+        <div class="prework-label">Pre-Work · Weeks of May 13–29, 2026</div>
+        <div class="prework-title">CliftonStrengths Assessment</div>
+        <div class="prework-desc">Materials emailed by David Chow. All attendees must complete by <strong>May 25, 2026</strong>. Your results will be shared before the workshop and used directly on Day 1.</div>
+      </div>
+    </div>
+
+    <div class="action-section" role="region" aria-label="Action items">
+      <div class="action-header">
+        <h2>Action Items &amp; Key Dates</h2>
+        <p>Select your cohort below.</p>
+      </div>
+
+      <div class="tab-strip" role="tablist" aria-label="Participant group">
+        <button class="tab-btn active" role="tab" aria-selected="true"  aria-controls="panel-all" id="tab-all">All Participants</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="panel-usc" id="tab-usc">USC Cohort Travel</button>
+      </div>
+
+      <div class="tab-panels">
+
+        <!-- ALL -->
+        <div class="tab-panel active" id="panel-all" role="tabpanel" aria-labelledby="tab-all">
+          <div class="action-item">
+            <span class="action-badge badge-deadline">By May 25</span>
+            <div class="action-item-text">
+              <strong>Complete the CliftonStrengths Assessment</strong>
+              <div class="sub">Materials emailed by Dave Chow at the beginning of May must be completed by May 25. Your results will be shared before the Workshop and used directly on Day 1.</div>
+            </div>
+          </div>
+          <div class="action-item">
+            <span class="action-badge badge-asap">ASAP</span>
+            <div class="action-item-text">
+              <strong>Submit Dietary Restrictions and Accessibility Needs</strong>
+              <div class="sub">Please email any dietary restrictions, food allergies, or accessibility accommodation requests to <strong>Rae Ann McMahan Paden</strong> as soon as possible so we can plan accordingly.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- USC -->
+        <div class="tab-panel" id="panel-usc" role="tabpanel" aria-labelledby="tab-usc">
+          <div class="action-item">
+            <span class="action-badge badge-deadline">By May 4</span>
+            <div class="action-item-text">
+              <strong>Book your flight to Albuquerque</strong>
+              <div class="sub">Reserve your flight via <strong>Christopherson Business Travel (CBT)</strong>. Phone (preferred): <strong>1-866-390-5131</strong> · Email: groups@cbtravel.com · Event Identifier: <strong>USC Emerging Leaders</strong>. Plan to arrive by Wednesday, June 3 and depart after 12:30 pm on Friday, June 5.</div>
+              <div class="accordion" style="margin-top:10px;">
+                <button class="accordion-trigger" aria-expanded="false" aria-controls="cbt-body" id="cbt-trigger">
+                  <span>View flight booking details</span>
+                  <span class="accordion-chevron" aria-hidden="true">&#9660;</span>
+                </button>
+                <div class="accordion-body" id="cbt-body" role="region" aria-labelledby="cbt-trigger">
+                  <p style="font-size:13.5px;color:var(--mid);margin-bottom:12px;">CBT will book Economy class flights per USC travel guidelines. Have the following ready when you call:</p>
+                  <ul style="margin:0;padding-left:18px;font-size:13.5px;color:var(--mid);line-height:1.75;">
+                    <li>Full name as it appears on your ID, date of birth, and contact information</li>
+                    <li>Gender as listed on your ID</li>
+                    <li>Frequent flyer or Global Entry/Known Traveler numbers</li>
+                    <li>International travelers: passport number, expiration date, and country of issue</li>
+                    <li>Any preferred flight details (e.g. seat or timing preferences)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="usc-note" role="note">
+            <div class="usc-note-label">Ground Transportation Note</div>
+            <div class="usc-note-text">You will need to arrange your own ground transportation from the Albuquerque (ABQ) airport to Hotel Chaco. Please plan for a rideshare, taxi, or shuttle.</div>
+          </div>
+
+          <div class="action-item">
+            <span class="action-badge badge-asap">ASAP</span>
+            <div class="action-item-text">
+              <strong>Complete your Hotel Chaco room request</strong>
+              <div class="sub">Reserve a room by submitting the form below. USC covers two nights: June 3 and June 4.</div>
+              <p style="margin-top:12px;font-size:14px;color:var(--mid);line-height:1.65;">
+                <strong>Hotel Chaco</strong><br>
+                2000 Bellamah Ave NW, Albuquerque, NM 87104<br>
+                Check-in: 4 pm | Check-out: 11 am
+              </p>
+              <div class="accordion" style="margin-top:10px;width:100%;">
+                <button class="accordion-trigger" style="width:100%;" aria-expanded="false" aria-controls="hotel-form-body" id="hotel-form-trigger">
+                  <span>Room request form</span>
+                  <span class="accordion-chevron" aria-hidden="true">&#9660;</span>
+                </button>
+                <div class="accordion-body" id="hotel-form-body" role="region" aria-labelledby="hotel-form-trigger">
+                  <div class="form-coverage">
+                    <strong>Coverage:</strong> USC covers <strong>two nights: June 3 and June 4</strong>; additional nights are the participant's responsibility. Please note any special circumstances in the Special Requests field.
+                  </div>
+                  <form class="hotel-form" id="hotelForm" novalidate>
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="hf-name">Full Name <span aria-hidden="true" style="color:var(--maroon)">*</span></label>
+                        <input type="text" id="hf-name" name="name" required autocomplete="name" placeholder="First Last">
+                      </div>
+                      <div class="form-group">
+                        <label for="hf-email">Email Address <span aria-hidden="true" style="color:var(--maroon)">*</span></label>
+                        <input type="email" id="hf-email" name="email" required autocomplete="email" placeholder="you@med.usc.edu">
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="hf-checkin">Check-in Date <span aria-hidden="true" style="color:var(--maroon)">*</span></label>
+                        <input type="date" id="hf-checkin" name="checkin" required value="2026-06-03" min="2026-06-03" max="2026-06-07">
+                      </div>
+                      <div class="form-group">
+                        <label for="hf-checkout">Check-out Date <span aria-hidden="true" style="color:var(--maroon)">*</span></label>
+                        <input type="date" id="hf-checkout" name="checkout" required value="2026-06-05" min="2026-06-04" max="2026-06-08">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="hf-bed">Bed Preference <span aria-hidden="true" style="color:var(--maroon)">*</span></label>
+                      <select id="hf-bed" name="bed" required>
+                        <option value="">Select one</option>
+                        <option value="One King">One King</option>
+                        <option value="Two Queens">Two Queens</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="hf-notes">Special Requests or Accessibility Needs <span style="font-weight:400;color:var(--mid)">(optional)</span></label>
+                      <textarea id="hf-notes" name="notes" placeholder="Accessibility needs, additional-night requests, room-adjacent requests, etc."></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Submit Room Request</button>
+                    <div class="form-success" id="formSuccess" role="alert" aria-live="polite">
+                      Your request has been submitted. Isabel Lora will follow up to confirm your reservation.
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /panel-usc -->
+      </div><!-- /tab-panels -->
+    </div><!-- /action-section -->
+  </section>
+
+  <!-- ── 5. SCHEDULE (full timeline) ───────────────────────────── -->
+  <section class="section-block" id="schedule" aria-labelledby="schedule-title">
+    <p class="section-label">Full Agenda</p>
+    <h2 class="section-title" id="schedule-title">Workshop Schedule</h2>
+    <div class="section-rule" aria-hidden="true"></div>
+
+    <!-- Quick-ref logistics -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:40px;">
+      <div style="background:white;border-radius:14px;padding:18px 20px;box-shadow:0 2px 14px rgba(0,0,0,0.05);">
+        <span style="font-size:22px;display:block;margin-bottom:8px;">🏨</span>
+        <h3 style="font-size:12px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;">Hotel (Both Groups)</h3>
+        <p style="font-size:13.5px;color:var(--mid);line-height:1.6;"><strong>Hotel Chaco</strong><br>2000 Bellamah Ave NW<br>Albuquerque, NM 87104<br>Check-in: 4 pm | Check-out: 11 am</p>
+      </div>
+      <div style="background:white;border-radius:14px;padding:18px 20px;box-shadow:0 2px 14px rgba(0,0,0,0.05);">
+        <span style="font-size:22px;display:block;margin-bottom:8px;">🏥</span>
+        <h3 style="font-size:12px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;">Workshop Venue</h3>
+        <p style="font-size:13.5px;color:var(--mid);line-height:1.6;"><strong>UNM Cancer Center — Education Wing</strong><br>1201 Camino de Salud NE<br>Albuquerque, NM 87102<br>Shuttle from Hotel Chaco: 7:45 am daily</p>
+      </div>
+    </div>
+
+    <!-- WED JUNE 3 -->
+    <div class="day-section">
+      <div class="day-header">
+        <div class="day-pill gold">Wed · June 3</div>
+        <div class="day-title">Arrival Day</div>
+        <div class="day-rule"></div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="time-label">Afternoon</div>
+          <div class="timeline-dot gold"></div>
+          <div class="timeline-card neutral">
+            <div class="session-title">USC Participants Travel to Albuquerque</div>
+            <div class="session-desc">Arrange own ground transportation from ABQ airport to Hotel Chaco.</div>
+            <div class="info-box"><strong>Hotel Chaco</strong> · 2000 Bellamah Ave NW, Albuquerque, NM 87104<br>Check-in begins at 4:00 pm. For travel coordination, contact <strong>Isabel Lora</strong> (USC) at (323) 865-3147.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">6–8 pm</div>
+          <div class="timeline-dot mid"></div>
+          <div class="timeline-card neutral">
+            <div class="session-title">Dinner on Your Own</div>
+            <div class="session-desc">Suggested spots near the hotel: <strong>Sawmill Market</strong>, <strong>Old Town</strong>, or <strong>Seasons Rotisserie &amp; Grill</strong>.</div>
+            <div class="info-box">See the <a href="albuquerque.html">Visiting Albuquerque</a> page for more dining recommendations and things to do while you're in town.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THU JUNE 4 -->
+    <div class="day-section">
+      <div class="day-header">
+        <div class="day-pill">Thu · June 4</div>
+        <div class="day-title">Day One</div>
+        <div class="day-rule"></div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="time-label">7:45 am</div>
+          <div class="timeline-dot mid"></div>
+          <div class="timeline-card neutral">
+            <div class="session-title">🚌 Shuttle Departure</div>
+            <div class="session-desc">Pick-up at Hotel Chaco front entrance → UNM Comprehensive Cancer Center Education Wing.</div>
+            <div class="info-box"><strong>UNM Cancer Center Education Wing</strong><br>1201 Camino de Salud NE, Albuquerque, NM 87102<br>All sessions today are held here. Parking available on site if you are driving independently.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">8:30 am</div>
+          <div class="timeline-dot mid"></div>
+          <div class="timeline-card neutral"><div class="session-title">Breakfast</div></div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">9:00 am</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-card maroon">
+            <div class="session-title">Welcome &amp; Director's Overview</div>
+            <div class="session-desc">Objectives, life in the matrix cancer center, and what you need to know to lead.</div>
+            <div class="session-speaker">Yolanda Sanchez, PhD · Caryn Lerman, PhD</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">9:30 am</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-card maroon">
+            <div class="session-title">Panel: Leadership Journey &amp; Aligning Your Personal Values</div>
+            <div class="session-desc">Panelists share career paths and how personal values shape leadership decisions in complex institutions.</div>
+            <div class="session-speaker">Moderator: Chanita Hughes Halbert, PhD · Yolanda Sanchez, PhD · TBD panelists</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">10:30 am</div>
+          <div class="timeline-dot mid"></div>
+          <div class="timeline-card neutral"><div class="session-title">Break</div></div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">10:45 am</div>
+          <div class="timeline-dot teal"></div>
+          <div class="timeline-card teal">
+            <div class="session-title">Small Group Discussion: Your Leadership Journeys</div>
+            <div class="session-desc">Getting to know one another through goals, barriers, and strengths. Facilitated small-group discussion.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">11:15 am</div>
+          <div class="timeline-dot teal"></div>
+          <div class="timeline-card teal">
+            <div class="session-title">Ask Me Anything: Real-World Leadership</div>
+            <div class="session-desc">Facilitated in small groups with panelists. Bring your candid questions.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">11:45 am</div>
+          <div class="timeline-dot mid"></div>
+          <div class="timeline-card neutral"><div class="session-title">Networking and Group Mentoring Lunch</div></div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">1:30 pm</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-card maroon">
+            <div class="session-title">CliftonStrengths in Leadership</div>
+            <div class="session-desc">Workshopping examples of challenges and CliftonStrengths utilization. Draws on your pre-work assessment results.</div>
+            <div class="session-speaker">Dave Chow, Leading Together</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">4:00 pm</div>
+          <div class="timeline-dot mid"></div>
+          <div class="timeline-card neutral">
+            <div class="session-title">Shuttle → Campo at Los Poblanos</div>
+            <div class="session-desc">Pick-up at UNM Cancer Center for USC group only. UNM group to arrange own transportation.</div>
+            <div class="info-box gold-box"><strong>Campo at Los Poblanos</strong> · 4803 Rio Grande Blvd NW, Los Ranchos de Albuquerque, NM 87107</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">4:30 pm</div>
+          <div class="timeline-dot gold"></div>
+          <div class="timeline-card gold"><div class="session-title">🍹 Cocktails at Campo at Los Poblanos</div></div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">5:30 pm</div>
+          <div class="timeline-dot gold"></div>
+          <div class="timeline-card gold">
+            <div class="session-title">🌮 Dinner — Hosted by UNM at Campo at Los Poblanos</div>
+            <div class="session-desc">Farm-to-table dinner on a historic lavender farm. Transportation back to Hotel Chaco is on your own.</div>
+          </div>
+        </div>
+      </div>
+      <!-- Day 1 eval -->
+      <div class="eval-inline">
+        <div class="eval-card maroon-card">
+          <h3>✅ Day 1 Evaluation</h3>
+          <p>Please complete after today's sessions before tomorrow morning.</p>
+          <a href="https://tinyurl.com/leaders2025-1" target="_blank" rel="noopener">Open Evaluation Form ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRI JUNE 5 -->
+    <div class="day-section">
+      <div class="day-header">
+        <div class="day-pill teal">Fri · June 5</div>
+        <div class="day-title">Day Two</div>
+        <div class="day-rule"></div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="time-label">7:45 am</div>
+          <div class="timeline-dot mid"></div>
+          <div class="timeline-card neutral">
+            <div class="session-title">🚌 Shuttle Departure</div>
+            <div class="session-desc">Pick-up at Hotel Chaco front entrance → UNM Comprehensive Cancer Center Education Wing.</div>
+            <div class="info-box"><strong>UNM Cancer Center Education Wing</strong> · 1201 Camino de Salud NE, Albuquerque, NM 87102<br>Same venue as yesterday. Check-out from Hotel Chaco is at 11 am — arrange luggage storage at the front desk if needed.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">8:30 am</div>
+          <div class="timeline-dot mid"></div>
+          <div class="timeline-card neutral"><div class="session-title">Breakfast</div></div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">9:00 am</div>
+          <div class="timeline-dot teal"></div>
+          <div class="timeline-card teal">
+            <div class="session-title">Making Your Voice Heard</div>
+            <div class="session-desc">Leveling up your persuasive communication skills for impact, with embedded exercises.</div>
+            <div class="session-speaker">Caryn Lerman, PhD</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">11:30 am</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-card maroon">
+            <div class="session-title">Wrap-Up Discussion &amp; Next Steps</div>
+            <div class="session-desc">Closing conversation, key takeaways, and where the group goes from here.</div>
+            <div class="session-speaker">Yolanda Sanchez, PhD · Caryn Lerman, PhD</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="time-label">12:30 pm</div>
+          <div class="timeline-dot mid"></div>
+          <div class="timeline-card neutral">
+            <div class="session-title">Depart with Boxed Lunch</div>
+            <div class="session-desc">USC participants: departure transportation details TBD.</div>
+            <div class="info-box maroon-box">For USC departure coordination, contact <strong>Isabel Lora</strong> at (323) 865-3147, or <strong>Grace Kukuk</strong>.</div>
+          </div>
+        </div>
+      </div>
+      <!-- Day 2 eval -->
+      <div class="eval-inline">
+        <div class="eval-card teal-card">
+          <h3>✅ Day 2 Evaluation</h3>
+          <p>Please complete before departing on Friday.</p>
+          <a href="https://tinyurl.com/leaders2025-2" target="_blank" rel="noopener">Open Evaluation Form ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 6. ADDITIONAL DETAILS ─────────────────────────────────── -->
+  <section class="section-block" id="details" aria-labelledby="details-title">
+    <p class="section-label">Good to Know</p>
+    <h2 class="section-title" id="details-title">Additional Details</h2>
+    <div class="section-rule" aria-hidden="true"></div>
+    <div class="details-block" style="margin-bottom:32px;">
+      <h2>What to Expect</h2>
+      <div class="detail-row">
+        <span class="detail-icon" aria-hidden="true">👔</span>
+        <div class="detail-text"><strong>Dress Code:</strong> Casual.</div>
+      </div>
+      <div class="detail-row">
+        <span class="detail-icon" aria-hidden="true">🌡️</span>
+        <div class="detail-text"><strong>Comfort:</strong> The venue is air-conditioned, so a light jacket is recommended. Please wear comfortable shoes.</div>
+      </div>
+      <div class="detail-row">
+        <span class="detail-icon" aria-hidden="true">🍎</span>
+        <div class="detail-text"><strong>Meals:</strong> All meals on June 4 through June 5 lunch are provided. Save receipts for reimbursement for incidentals and contact your staff point of contact after your trip.</div>
+      </div>
+    </div>
+
+    <p class="section-label">Policy</p>
+    <h2 class="section-title" style="font-size:clamp(18px,3vw,24px);">Photography &amp; Videography Notice</h2>
+    <div class="section-rule" aria-hidden="true"></div>
+    <div class="release-notice" role="note" aria-label="Photography and videography notice">
+      <p>By attending the Changing the Face of Cancer Center Leadership Workshop, you may be subject to photography or videography, which may be used by UNM and USC Norris Comprehensive Cancer Centers to promote the program or other events. By attending, you agree to grant UNM and USC Norris the right to use your likeness in any photography, videography, and/or materials, including but not limited to the organizations' websites, newsletters, and communications.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- Back to top -->
+<button id="back-top" aria-label="Back to top" title="Back to top">↑</button>
+
+<script>
+// ── Tab switching ──────────────────────────────────────────────
+document.querySelectorAll('.tab-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var targetId = btn.getAttribute('aria-controls');
+    document.querySelectorAll('.tab-btn').forEach(function(b) {
+      b.classList.remove('active'); b.setAttribute('aria-selected','false');
+    });
+    document.querySelectorAll('.tab-panel').forEach(function(p) {
+      p.classList.remove('active');
+    });
+    btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+    document.getElementById(targetId).classList.add('active');
+  });
+  btn.addEventListener('keydown', function(e) {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
+    var idx = tabs.indexOf(btn);
+    if (e.key === 'ArrowRight') { e.preventDefault(); var next = tabs[(idx+1)%tabs.length]; next.click(); next.focus(); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); var prev = tabs[(idx-1+tabs.length)%tabs.length]; prev.click(); prev.focus(); }
+  });
+});
+
+// ── Accordion ──────────────────────────────────────────────────
+document.querySelectorAll('.accordion-trigger').forEach(function(trigger) {
+  trigger.addEventListener('click', function() {
+    var expanded = trigger.getAttribute('aria-expanded') === 'true';
+    trigger.setAttribute('aria-expanded', String(!expanded));
+  });
+});
+
+// ── Hotel form ─────────────────────────────────────────────────
+var hotelForm = document.getElementById('hotelForm');
+if (hotelForm) {
+  var formSuccess = document.getElementById('formSuccess');
+  hotelForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = hotelForm.querySelector('.form-submit');
+    var required = hotelForm.querySelectorAll('[required]');
+    var valid = true;
+    required.forEach(function(field) {
+      if (!field.value.trim()) { field.style.borderColor = 'var(--maroon)'; valid = false; }
+      else { field.style.borderColor = ''; }
+    });
+    if (!valid) return;
+    var data = new FormData(hotelForm);
+    var payload = {};
+    data.forEach(function(v,k) { payload[k] = v; });
+    btn.textContent = 'Sending…'; btn.disabled = true;
+    fetch('https://formspree.io/f/REPLACE_ME', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(resp) {
+      if (resp.ok) { hotelForm.style.display = 'none'; formSuccess.style.display = 'block'; }
+      else { btn.textContent = 'Submit Room Request'; btn.disabled = false; alert('Submission failed. Please email Isabel Lora directly.'); }
+    }).catch(function() { btn.textContent = 'Submit Room Request'; btn.disabled = false; alert('Submission failed. Please email Isabel Lora directly.'); });
+  });
+}
+
+// ── Jump nav active-section highlight ─────────────────────────
+var sections = document.querySelectorAll('section[id]');
+var navLinks = document.querySelectorAll('.jump-nav-inner a');
+function onScroll() {
+  var scrollY = window.scrollY + 120;
+  var current = '';
+  sections.forEach(function(s) { if (s.offsetTop <= scrollY) current = s.id; });
+  navLinks.forEach(function(a) {
+    a.classList.toggle('active', a.getAttribute('data-section') === current);
+  });
+  document.getElementById('back-top').classList.toggle('visible', window.scrollY > 400);
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+// ── Back to top ────────────────────────────────────────────────
+document.getElementById('back-top').addEventListener('click', function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
