@@ -61,13 +61,8 @@
   .av-gold { background:rgba(201,168,76,0.18); color:#7A5C00; }
   .member-name { font-size:14px; font-weight:600; color:var(--dark); margin-bottom:2px; }
   .member-role { font-size:12px; color:var(--mid); line-height:1.4; }
-  .member-email { font-size:11.5px; color:var(--teal); margin-top:4px; text-decoration:none; }
+  .member-email { font-size:11.5px; color:var(--teal); margin-top:4px; text-decoration:none; display:block; }
   .member-email:hover { text-decoration:underline; }
-  .member-inst { font-size:11px; color:var(--teal); font-weight:600; margin-top:2px; }
-
-  /* PLACEHOLDER */
-  .empty-note { background:white; border-radius:14px; padding:40px 32px; text-align:center; color:var(--mid); font-size:15px; border:2px dashed #DDD; }
-  .empty-note .icon { font-size:32px; display:block; margin-bottom:10px; }
 </style>
 </head>
 <body>
@@ -93,7 +88,7 @@
   </div>
 
   <!-- ══════════════════════════════════════════
-       COHORT 3 — 2026 (current, to be populated)
+       COHORT 3 — 2026
   ══════════════════════════════════════════ -->
   <div id="cohort3" class="tab-content active">
     <div class="cohort-header">
@@ -109,42 +104,68 @@
       <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>USC participant</div>
     </div>
 
-    <div class="empty-note">
-      <span class="icon">📋</span>
-      <strong>Cohort 3 roster coming soon.</strong><br>
-      Add participant names, titles, and institutions here once confirmed.<br><br>
-      <em style="font-size:13px;opacity:0.7;">To add members: duplicate the .member-card blocks below and update the details. Use av-maroon for UNM and av-teal for USC participants.</em>
-    </div>
-
-    <!-- TEMPLATE for adding Cohort 3 members — copy and paste this block for each person:
-    <div class="inst-label">UNM Comprehensive Cancer Center</div>
-    <div class="member-grid">
-      <div class="member-card">
-        <div class="member-avatar av-maroon">XX</div>
-        <div>
-          <div class="member-name">First Last, Degree</div>
-          <div class="member-role">Title / Role</div>
-          <a class="member-email" href="mailto:email@salud.unm.edu">email@salud.unm.edu</a>
-        </div>
-      </div>
-    </div>
-
     <div class="inst-label">USC Norris Comprehensive Cancer Center</div>
     <div class="member-grid">
+
       <div class="member-card">
-        <div class="member-avatar av-teal">XX</div>
+        <div class="member-avatar av-teal">OB</div>
         <div>
-          <div class="member-name">First Last, Degree</div>
-          <div class="member-role">Title / Role</div>
-          <a class="member-email" href="mailto:email@med.usc.edu">email@med.usc.edu</a>
+          <div class="member-name">Oliver Bell, PhD</div>
+          <div class="member-role">Associate Professor of Cancer Biology and Stem Cell and Regenerative Medicine</div>
+          <a class="member-email" href="mailto:oliver.bell@med.usc.edu">oliver.bell@med.usc.edu</a>
         </div>
       </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">GI</div>
+        <div>
+          <div class="member-name">Gino In, MD, MPH</div>
+          <div class="member-role">Associate Professor of Clinical Medicine</div>
+          <a class="member-email" href="mailto:gino.in@med.usc.edu">gino.in@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">SL</div>
+        <div>
+          <div class="member-name">Sheng Li, PhD</div>
+          <div class="member-role">Associate Professor of Cancer Biology and Quantitative and Computational Biology<br>Co-Lead, Epigenetic Regulation in Cancer Program</div>
+          <a class="member-email" href="mailto:sheng.li@med.usc.edu">sheng.li@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">LL</div>
+        <div>
+          <div class="member-name">Lihua Liu, PhD</div>
+          <div class="member-role">Associate Professor of Population and Public Health Sciences<br>Director, USC Cancer Surveillance Program</div>
+          <a class="member-email" href="mailto:lihualiu@usc.edu">lihualiu@usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">KM</div>
+        <div>
+          <div class="member-name">Kim Miller, PhD, MPH</div>
+          <div class="member-role">Associate Professor of Population and Public Health Sciences<br>Co-Director, USC Center for Young Adult Cancer Survivorship Research</div>
+          <a class="member-email" href="mailto:kimberly.miller@med.usc.edu">kimberly.miller@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">SP</div>
+        <div>
+          <div class="member-name">Saul Priceman, PhD</div>
+          <div class="member-role">Associate Professor of Medicine and Molecular Microbiology and Immunology<br>Co-Lead, Tumor Immunology &amp; Microenvironment Program · Director, Center for Cancer Cellular Immunotherapy Research</div>
+          <a class="member-email" href="mailto:saul.priceman@med.usc.edu">saul.priceman@med.usc.edu</a>
+        </div>
+      </div>
+
     </div>
-    -->
   </div>
 
   <!-- ══════════════════════════════════════════
-       COHORT 2 — 2025 (USC-hosted, Pasadena)
+       COHORT 2 — 2025
   ══════════════════════════════════════════ -->
   <div id="cohort2" class="tab-content">
     <div class="cohort-header teal">
@@ -160,7 +181,6 @@
       <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>USC participant</div>
     </div>
 
-    <!-- USC participants -->
     <div class="inst-label">USC Norris Comprehensive Cancer Center</div>
     <div class="member-grid">
 
@@ -168,11 +188,11 @@
         <div class="member-avatar av-teal">SA</div>
         <div>
           <div class="member-name">Sandra Algaze, MD</div>
-          <div class="member-role">Faculty, USC Norris Comprehensive Cancer Center</div>
+          <div class="member-role">Assistant Professor of Medicine, Division of Medical Oncology</div>
           <a class="member-email" href="mailto:sandra.algaze@med.usc.edu">sandra.algaze@med.usc.edu</a>
         </div>
       </div>
-      
+
       <div class="member-card">
         <div class="member-avatar av-teal">JE</div>
         <div>
@@ -212,15 +232,6 @@
       <div class="member-card">
         <div class="member-avatar av-teal">AM</div>
         <div>
-          <div class="member-name">Ashley Margol, MD</div>
-          <div class="member-role">Associate Professor, Clinical Pediatrics<br>Director, Brain Tumor Center & Pediatric Neuro-Oncology Program at Children's Hospital LA</div>
-          <a class="member-email" href="mailto:amargol@chla.usc.edu">amargol@chla.usc.edu</a>
-        </div>
-      </div>
-
-      <div class="member-card">
-        <div class="member-avatar av-teal">AM2</div>
-        <div>
           <div class="member-name">Anastasia Martynova, MD</div>
           <div class="member-role">Assistant Professor, Clinical Medicine, Breast Medical Oncology</div>
           <a class="member-email" href="mailto:anastasia.martynova@med.usc.edu">anastasia.martynova@med.usc.edu</a>
@@ -231,7 +242,7 @@
         <div class="member-avatar av-teal">JN</div>
         <div>
           <div class="member-name">Josh Neman, PhD</div>
-          <div class="member-role">Associate Professor, Neurological Surgery<br>Director, PhD Program in Cancer Biology & Genomics · Scientific Director, Brain Tumor Center</div>
+          <div class="member-role">Associate Professor, Neurological Surgery<br>Director, PhD Program in Cancer Biology &amp; Genomics · Scientific Director, Brain Tumor Center</div>
           <a class="member-email" href="mailto:yebrahim@usc.edu">yebrahim@usc.edu</a>
         </div>
       </div>
@@ -274,7 +285,6 @@
 
     </div>
 
-    <!-- UNM participants -->
     <div class="inst-label">UNM Comprehensive Cancer Center</div>
     <div class="member-grid">
 
@@ -309,7 +319,7 @@
   </div>
 
   <!-- ══════════════════════════════════════════
-       COHORT 1 — 2024 (UNM-hosted, Albuquerque)
+       COHORT 1 — 2024
   ══════════════════════════════════════════ -->
   <div id="cohort1" class="tab-content">
     <div class="cohort-header gold">
@@ -325,7 +335,6 @@
       <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>USC participant</div>
     </div>
 
-    <!-- UNM participants -->
     <div class="inst-label">UNM Comprehensive Cancer Center</div>
     <div class="member-grid">
 
@@ -439,7 +448,6 @@
 
     </div>
 
-    <!-- USC participants -->
     <div class="inst-label">USC Norris Comprehensive Cancer Center</div>
     <div class="member-grid">
 
@@ -447,7 +455,7 @@
         <div class="member-avatar av-teal">DH</div>
         <div>
           <div class="member-name">Diana Hanna, MD</div>
-          <div class="member-role">Faculty, USC Norris Comprehensive Cancer Center</div>
+          <div class="member-role">Assistant Professor of Clinical Medicine</div>
           <a class="member-email" href="mailto:diana.hanna@med.usc.edu">diana.hanna@med.usc.edu</a>
         </div>
       </div>
@@ -456,7 +464,7 @@
         <div class="member-avatar av-teal">RH</div>
         <div>
           <div class="member-name">Robert Hsu, MD</div>
-          <div class="member-role">Faculty, USC Norris Comprehensive Cancer Center</div>
+          <div class="member-role">Assistant Professor of Medicine, Division of Medical Oncology</div>
           <a class="member-email" href="mailto:robert.hsu@med.usc.edu">robert.hsu@med.usc.edu</a>
         </div>
       </div>
@@ -465,7 +473,7 @@
         <div class="member-avatar av-teal">CS</div>
         <div>
           <div class="member-name">Claradina Soto, PhD</div>
-          <div class="member-role">Faculty, USC Norris Comprehensive Cancer Center</div>
+          <div class="member-role">Associate Professor of Population and Public Health Sciences</div>
           <a class="member-email" href="mailto:toya@usc.edu">toya@usc.edu</a>
         </div>
       </div>
@@ -474,7 +482,7 @@
         <div class="member-avatar av-teal">ER</div>
         <div>
           <div class="member-name">Evanthia Roussos Torres, MD, PhD</div>
-          <div class="member-role">Faculty, USC Norris Comprehensive Cancer Center</div>
+          <div class="member-role">Assistant Professor of Medicine, Division of Medical Oncology</div>
           <a class="member-email" href="mailto:evanthia.roussostorres@med.usc.edu">evanthia.roussostorres@med.usc.edu</a>
         </div>
       </div>
@@ -483,7 +491,7 @@
         <div class="member-avatar av-teal">JT</div>
         <div>
           <div class="member-name">Jennifer Tsui, PhD</div>
-          <div class="member-role">Faculty, USC Norris Comprehensive Cancer Center</div>
+          <div class="member-role">Professor of Population and Public Health Sciences<br>Cancer Control Program Co-Leader · Director, Cancer Care Delivery Research and Implementation Science</div>
           <a class="member-email" href="mailto:tsuijenn@usc.edu">tsuijenn@usc.edu</a>
         </div>
       </div>
