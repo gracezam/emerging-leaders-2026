@@ -55,7 +55,9 @@
   .member-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px; margin-bottom:8px; }
   .member-card { background:white; border-radius:12px; padding:18px 20px; box-shadow:0 2px 12px rgba(0,0,0,0.05); display:flex; align-items:flex-start; gap:14px; border:1.5px solid rgba(0,0,0,0.05); transition:box-shadow 0.2s; }
   .member-card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.1); }
-  .member-avatar { width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:15px; font-weight:700; flex-shrink:0; }
+  .member-avatar { width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:15px; font-weight:700; flex-shrink:0; overflow:hidden; }
+  .member-avatar img { width:42px; height:42px; border-radius:50%; object-fit:cover; object-position:top; display:block; }
+  .avatar-initials { width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:15px; font-weight:700; flex-shrink:0; }
   .av-maroon { background:rgba(139,26,26,0.12); color:var(--maroon); }
   .av-teal { background:rgba(0,107,119,0.12); color:var(--teal); }
   .av-gold { background:rgba(201,168,76,0.18); color:#7A5C00; }
@@ -104,18 +106,113 @@
       <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>USC participant</div>
     </div>
 
-    <div class="inst-label">USC Norris Comprehensive Cancer Center</div>
+    <div class="inst-label">UNM Comprehensive Cancer Center</div>
     <div class="member-grid">
 
+      <!-- Belmonte -->
       <div class="member-card">
-        <div class="member-avatar av-teal">FC</div>
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-JBelmonte-photo.jpg"
+               alt="Jessica Belmonte"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>JB</div>'">
+        </div>
         <div>
-          <div class="member-name">Frances Chow, MD, MS</div>
-          <div class="member-role">Assistant Professor of Clinical Neurological Surgery &amp; Neurology</div>
-          <a class="member-email" href="mailto:frances.chow@med.usc.edu">frances.chow@med.usc.edu</a>
+          <div class="member-name">Jessica Belmonte, MD</div>
+          <div class="member-role">Assistant Professor, Internal Medicine, Hematology/Oncology</div>
+          <a class="member-email" href="mailto:JBelmonte@salud.unm.edu">JBelmonte@salud.unm.edu</a>
         </div>
       </div>
 
+      <!-- Craig -->
+      <div class="member-card">
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-AmCraig-photo.jpg"
+               alt="Amaranta Craig"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>AC</div>'">
+        </div>
+        <div>
+          <div class="member-name">Amaranta Craig, MD</div>
+          <div class="member-role">Assistant Professor, Obstetrics &amp; Gynecology, Gynecologic Oncology</div>
+          <a class="member-email" href="mailto:AmCraig@salud.unm.edu">AmCraig@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <!-- Foucar -->
+      <div class="member-card">
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-ChFoucar-photo.jpg"
+               alt="Charles Foucar"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>CF</div>'">
+        </div>
+        <div>
+          <div class="member-name">Charles Foucar, MD</div>
+          <div class="member-role">Assistant Professor, Internal Medicine, Hematology/Oncology</div>
+          <a class="member-email" href="mailto:ChFoucar@salud.unm.edu">ChFoucar@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <!-- Greenbaum -->
+      <div class="member-card">
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-AGreenbaum-photo.jpg"
+               alt="Alissa Greenbaum"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>AG</div>'">
+        </div>
+        <div>
+          <div class="member-name">Alissa Greenbaum, MD</div>
+          <div class="member-role">Assistant Professor, Surgery, Surgical Oncology<br>Director, Peritoneal Surface Malignancy Program</div>
+          <a class="member-email" href="mailto:AGreenbaum@salud.unm.edu">AGreenbaum@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <!-- Nash -->
+      <div class="member-card">
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-SarNash-photo.jpg"
+               alt="Sarah Nash"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>SN</div>'">
+        </div>
+        <div>
+          <div class="member-name">Sarah Nash, MPH, PhD</div>
+          <div class="member-role">Associate Professor, Internal Medicine<br>Co-Director, New Mexico Tumor Registry</div>
+          <a class="member-email" href="mailto:SarNash@salud.unm.edu">SarNash@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <!-- Ohi -->
+      <div class="member-card">
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-ROhi-photo.jpg"
+               alt="Ryoma Ohi"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>RO</div>'">
+        </div>
+        <div>
+          <div class="member-name">Ryoma Ohi, PhD</div>
+          <div class="member-role">Professor, Internal Medicine, Molecular Medicine</div>
+          <a class="member-email" href="mailto:ROhi@salud.unm.edu">ROhi@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <!-- Rieder -->
+      <div class="member-card">
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-SRieder-photo.jpg"
+               alt="Stephanie Rieder"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>SR</div>'">
+        </div>
+        <div>
+          <div class="member-name">Stephanie Rieder, MD, PhD</div>
+          <div class="member-role">Assistant Professor, Obstetrics &amp; Gynecology, Gynecologic Oncology</div>
+          <a class="member-email" href="mailto:SRieder@salud.unm.edu">SRieder@salud.unm.edu</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="inst-label">USC Norris Comprehensive Cancer Center</div>
+    <div class="member-grid">
+
+      <!-- Bell -->
       <div class="member-card">
         <div class="member-avatar av-teal">OB</div>
         <div>
@@ -125,6 +222,17 @@
         </div>
       </div>
 
+      <!-- Chow -->
+      <div class="member-card">
+        <div class="member-avatar av-teal">FC</div>
+        <div>
+          <div class="member-name">Frances Chow, MD, MS</div>
+          <div class="member-role">Assistant Professor of Clinical Neurological Surgery &amp; Neurology</div>
+          <a class="member-email" href="mailto:frances.chow@med.usc.edu">frances.chow@med.usc.edu</a>
+        </div>
+      </div>
+
+      <!-- In -->
       <div class="member-card">
         <div class="member-avatar av-teal">GI</div>
         <div>
@@ -134,6 +242,7 @@
         </div>
       </div>
 
+      <!-- Li -->
       <div class="member-card">
         <div class="member-avatar av-teal">SL</div>
         <div>
@@ -143,6 +252,7 @@
         </div>
       </div>
 
+      <!-- Liu -->
       <div class="member-card">
         <div class="member-avatar av-teal">LL</div>
         <div>
@@ -152,6 +262,7 @@
         </div>
       </div>
 
+      <!-- Miller -->
       <div class="member-card">
         <div class="member-avatar av-teal">KM</div>
         <div>
@@ -161,6 +272,7 @@
         </div>
       </div>
 
+      <!-- Priceman -->
       <div class="member-card">
         <div class="member-avatar av-teal">SP</div>
         <div>
@@ -190,6 +302,50 @@
       <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>USC participant</div>
     </div>
 
+    <div class="inst-label">UNM Comprehensive Cancer Center</div>
+    <div class="member-grid">
+
+      <div class="member-card">
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-DGuest-photo.jpg"
+               alt="Dolores Guest"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>DG</div>'">
+        </div>
+        <div>
+          <div class="member-name">Dolores Guest, PhD, RD</div>
+          <div class="member-role">Research Associate Professor<br>Director, Behavioral Measurement and Population Science Shared Resource</div>
+          <a class="member-email" href="mailto:dguest@salud.unm.edu">dguest@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-SSamudio-Ruiz-photo.jpg"
+               alt="Sabrina Samudio-Ruiz"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>SS</div>'">
+        </div>
+        <div>
+          <div class="member-name">Sabrina Samudio-Ruiz, PhD</div>
+          <div class="member-role">Associate Director, Shared Resources</div>
+          <a class="member-email" href="mailto:sruiz@salud.unm.edu">sruiz@salud.unm.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-BTawfik-photo.jpg"
+               alt="Bernard Tawfik"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>BT</div>'">
+        </div>
+        <div>
+          <div class="member-name">Bernard Tawfik, MD</div>
+          <div class="member-role">Associate Professor, Medical Oncology, Breast Specialty<br>Chair, Commission on Cancer · Lead, Neuroendocrine Theranostics Program</div>
+          <a class="member-email" href="mailto:btawfik@salud.unm.edu">btawfik@salud.unm.edu</a>
+        </div>
+      </div>
+
+    </div>
+
     <div class="inst-label">USC Norris Comprehensive Cancer Center</div>
     <div class="member-grid">
 
@@ -197,7 +353,7 @@
         <div class="member-avatar av-teal">SA</div>
         <div>
           <div class="member-name">Sandra Algaze, MD</div>
-          <div class="member-role">Assistant Professor of Medicine, Division of Medical Oncology</div>
+          <div class="member-role">Assistant Professor of Medicine, Medical Oncology</div>
           <a class="member-email" href="mailto:sandra.algaze@med.usc.edu">sandra.algaze@med.usc.edu</a>
         </div>
       </div>
@@ -206,7 +362,7 @@
         <div class="member-avatar av-teal">JE</div>
         <div>
           <div class="member-name">Juliet Emamaullee, MD, PhD</div>
-          <div class="member-role">Associate Professor, Surgery and Immunology<br>Research Director, Division of Abdominal Organ Transplantation at Children's Hospital LA</div>
+          <div class="member-role">Associate Professor, Surgery and Immunology<br>Research Director, Abdominal Organ Transplantation at Children's Hospital LA</div>
           <a class="member-email" href="mailto:juliet.emamaullee@med.usc.edu">juliet.emamaullee@med.usc.edu</a>
         </div>
       </div>
@@ -269,7 +425,7 @@
         <div class="member-avatar av-teal">DS</div>
         <div>
           <div class="member-name">Daphne Stewart, MD</div>
-          <div class="member-role">Clinical Professor, Medicine<br>Section Chief, Women's Cancers, Division of Medical Oncology</div>
+          <div class="member-role">Clinical Professor, Medicine<br>Section Chief, Women's Cancers, Medical Oncology</div>
           <a class="member-email" href="mailto:daphne.stewart@med.usc.edu">daphne.stewart@med.usc.edu</a>
         </div>
       </div>
@@ -278,7 +434,7 @@
         <div class="member-avatar av-teal">VT</div>
         <div>
           <div class="member-name">Varsha Tulpule, MD</div>
-          <div class="member-role">Assistant Professor, Clinical Medicine, Division of Medical Oncology – Genitourinary</div>
+          <div class="member-role">Assistant Professor, Clinical Medicine, Medical Oncology – Genitourinary</div>
           <a class="member-email" href="mailto:varsha.tulpule@med.usc.edu">varsha.tulpule@med.usc.edu</a>
         </div>
       </div>
@@ -287,40 +443,8 @@
         <div class="member-avatar av-teal">KZ</div>
         <div>
           <div class="member-name">Kali Zhou, MD</div>
-          <div class="member-role">Assistant Professor, Clinical Medicine, Division of Gastrointestinal and Liver Diseases</div>
+          <div class="member-role">Assistant Professor, Clinical Medicine, Gastrointestinal and Liver Diseases</div>
           <a class="member-email" href="mailto:kalizhou@usc.edu">kalizhou@usc.edu</a>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="inst-label">UNM Comprehensive Cancer Center</div>
-    <div class="member-grid">
-
-      <div class="member-card">
-        <div class="member-avatar av-maroon">DG</div>
-        <div>
-          <div class="member-name">Dolores Guest, PhD, RD</div>
-          <div class="member-role">Research Associate Professor<br>Director, Behavioral Measurement and Population Science Shared Resource</div>
-          <a class="member-email" href="mailto:dguest@salud.unm.edu">dguest@salud.unm.edu</a>
-        </div>
-      </div>
-
-      <div class="member-card">
-        <div class="member-avatar av-maroon">SS</div>
-        <div>
-          <div class="member-name">Sabrina Samudio-Ruiz, PhD</div>
-          <div class="member-role">Associate Director, Shared Resources</div>
-          <a class="member-email" href="mailto:sruiz@salud.unm.edu">sruiz@salud.unm.edu</a>
-        </div>
-      </div>
-
-      <div class="member-card">
-        <div class="member-avatar av-maroon">BT</div>
-        <div>
-          <div class="member-name">Bernard Tawfik, MD</div>
-          <div class="member-role">Associate Professor, Medical Oncology, Breast Specialty<br>Chair, Commission on Cancer · Lead, Neuroendocrine Theranostics Program</div>
-          <a class="member-email" href="mailto:btawfik@salud.unm.edu">btawfik@salud.unm.edu</a>
         </div>
       </div>
 
@@ -348,109 +472,157 @@
     <div class="member-grid">
 
       <div class="member-card">
-        <div class="member-avatar av-maroon">PA</div>
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-PAdsul-photo.jpg"
+               alt="Prajakta Adsul"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>PA</div>'">
+        </div>
         <div>
           <div class="member-name">Prajakta Adsul, PhD</div>
-          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <div class="member-role">Assistant Professor, Internal Medicine<br>Director, Center for Advancing Dissemination and Implementation Science</div>
           <a class="member-email" href="mailto:padsul@salud.unm.edu">padsul@salud.unm.edu</a>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-avatar av-maroon">EB</div>
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-EBartee-photo.jpg"
+               alt="Eric Bartee"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>EB</div>'">
+        </div>
         <div>
           <div class="member-name">Eric Bartee, PhD</div>
-          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <div class="member-role">Associate Professor, Molecular Genetics &amp; Microbiology<br>Dana C. Wood Professor in Cancer Immunotherapy</div>
           <a class="member-email" href="mailto:ebartee@salud.unm.edu">ebartee@salud.unm.edu</a>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-avatar av-maroon">EC</div>
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-ECastillo-photo.jpg"
+               alt="Eliseo Castillo"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>EC</div>'">
+        </div>
         <div>
           <div class="member-name">Eliseo Castillo, PhD</div>
-          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <div class="member-role">Associate Professor, Internal Medicine<br>Director of Gastroenterology Research · Associate Director, Diversity, Equity &amp; Inclusion</div>
           <a class="member-email" href="mailto:ecastillo@salud.unm.edu">ecastillo@salud.unm.edu</a>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-avatar av-maroon">JG</div>
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-JGillette-photo.jpg"
+               alt="Jennifer Gillette"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>JG</div>'">
+        </div>
         <div>
           <div class="member-name">Jennifer Gillette, PhD</div>
-          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <div class="member-role">Professor, Pathology; Senior Director for Research<br>Director, Undergraduate Pipeline Network Program</div>
           <a class="member-email" href="mailto:jgillette@salud.unm.edu">jgillette@salud.unm.edu</a>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-avatar av-maroon">NH</div>
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-NHashemi-photo.jpg"
+               alt="Neda Hashemi"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>NH</div>'">
+        </div>
         <div>
           <div class="member-name">Neda Hashemi, MD</div>
-          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <div class="member-role">Associate Professor, Internal Medicine, Hematology/Oncology<br>Medical Director, NM Cancer Research Alliance</div>
           <a class="member-email" href="mailto:nhashemi@salud.unm.edu">nhashemi@salud.unm.edu</a>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-avatar av-maroon">DL</div>
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-DYLee-photo.jpg"
+               alt="David Lee"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>DL</div>'">
+        </div>
         <div>
           <div class="member-name">David Lee, MD, PhD</div>
-          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <div class="member-role">Associate Professor, Internal Medicine, Hematology/Oncology<br>Medical Director of Radiation Oncology</div>
           <a class="member-email" href="mailto:dylee@salud.unm.edu">dylee@salud.unm.edu</a>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-avatar av-maroon">SL</div>
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-SLeng-photo.jpg"
+               alt="Shuguang Leng"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>SL</div>'">
+        </div>
         <div>
           <div class="member-name">Shuguang Leng, PhD</div>
-          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <div class="member-role">Associate Professor, Internal Medicine<br>Epidemiology, Biostatistics &amp; Preventive Medicine</div>
           <a class="member-email" href="mailto:sleng@salud.unm.edu">sleng@salud.unm.edu</a>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-avatar av-maroon">DL2</div>
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-DLidke-photo.jpg"
+               alt="Diane Lidke"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>DL</div>'">
+        </div>
         <div>
           <div class="member-name">Diane Lidke, PhD</div>
-          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <div class="member-role">Professor, Pathology; Vice-Chair for Research</div>
           <a class="member-email" href="mailto:dlidke@salud.unm.edu">dlidke@salud.unm.edu</a>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-avatar av-maroon">PM</div>
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-PMao-photo.jpg"
+               alt="Peng Mao"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>PM</div>'">
+        </div>
         <div>
           <div class="member-name">Peng Mao, PhD</div>
-          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <div class="member-role">Assistant Professor, Internal Medicine, Molecular Medicine</div>
           <a class="member-email" href="mailto:pmao@salud.unm.edu">pmao@salud.unm.edu</a>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-avatar av-maroon">JN</div>
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-JNemunaitis-photo.jpg"
+               alt="Jacklyn Nemunaitis"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>JN</div>'">
+        </div>
         <div>
           <div class="member-name">Jacklyn Nemunaitis, MD</div>
-          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <div class="member-role">Assistant Professor, Internal Medicine, Hematology/Oncology</div>
           <a class="member-email" href="mailto:jnemunaitis@salud.unm.edu">jnemunaitis@salud.unm.edu</a>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-avatar av-maroon">VP</div>
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-VPalanisamy-photo.jpg"
+               alt="Viswanathan Palanisamy"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>VP</div>'">
+        </div>
         <div>
           <div class="member-name">Viswanathan Palanisamy, PhD</div>
-          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <div class="member-role">Professor, Internal Medicine, Molecular Medicine</div>
           <a class="member-email" href="mailto:vpalanisamy@salud.unm.edu">vpalanisamy@salud.unm.edu</a>
         </div>
       </div>
 
       <div class="member-card">
-        <div class="member-avatar av-maroon">JV</div>
+        <div class="member-avatar">
+          <img src="https://directory-tools.health.unm.edu/uploaded_photos/SOM-JValdez-photo.jpg"
+               alt="Jessica Valdez"
+               onerror="this.parentElement.innerHTML='<div class=\'avatar-initials av-maroon\'>JV</div>'">
+        </div>
         <div>
           <div class="member-name">Jessica Valdez, MD, MPH, FAAP</div>
-          <div class="member-role">Faculty, UNM Comprehensive Cancer Center</div>
+          <div class="member-role">Associate Professor, Pediatrics, Hematology/Oncology<br>Medical Director, Pediatric Infusion Unit · PI, Children's Oncology Group</div>
           <a class="member-email" href="mailto:jmvaldez@salud.unm.edu">jmvaldez@salud.unm.edu</a>
         </div>
       </div>
@@ -473,8 +645,17 @@
         <div class="member-avatar av-teal">RH</div>
         <div>
           <div class="member-name">Robert Hsu, MD</div>
-          <div class="member-role">Assistant Professor of Medicine, Division of Medical Oncology</div>
+          <div class="member-role">Assistant Professor of Medicine, Medical Oncology</div>
           <a class="member-email" href="mailto:robert.hsu@med.usc.edu">robert.hsu@med.usc.edu</a>
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar av-teal">ER</div>
+        <div>
+          <div class="member-name">Evanthia Roussos Torres, MD, PhD</div>
+          <div class="member-role">Assistant Professor of Medicine, Medical Oncology</div>
+          <a class="member-email" href="mailto:evanthia.roussostorres@med.usc.edu">evanthia.roussostorres@med.usc.edu</a>
         </div>
       </div>
 
@@ -484,15 +665,6 @@
           <div class="member-name">Claradina Soto, PhD</div>
           <div class="member-role">Associate Professor of Population and Public Health Sciences</div>
           <a class="member-email" href="mailto:toya@usc.edu">toya@usc.edu</a>
-        </div>
-      </div>
-
-      <div class="member-card">
-        <div class="member-avatar av-teal">ER</div>
-        <div>
-          <div class="member-name">Evanthia Roussos Torres, MD, PhD</div>
-          <div class="member-role">Assistant Professor of Medicine, Division of Medical Oncology</div>
-          <a class="member-email" href="mailto:evanthia.roussostorres@med.usc.edu">evanthia.roussostorres@med.usc.edu</a>
         </div>
       </div>
 
