@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRD2026 Admin Dashboard — CRTEC</title>
+<style>
+:root {
+  --cardinal: #990011;
+  --cardinal-light: #FAEAEA;
+  --navy: #1B2A4A;
+  --gold: #C5A028;
+  --white: #fff;
+  --off: #F7F7F7;
+  --border: #E0E0E0;
+  --text: #1A1A1A;
+  --mid: #555;
+  --lt: #888;
+  --hot1: #FFF3CD;
+  --hot2: #FFD580;
+  --hot3: #FF9800;
+  --hot4: #E65100;
+  --hot5: #8B0000;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--off); color: var(--text); }
+
+/* HEADER */
+.header { background: var(--cardinal); color: white; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+.header-left .label { font-size: 11px; opacity: .7; letter-spacing: 1px; text-transform: uppercase; }
+.header-left .title { font-size: 20px; font-weight: 700; font-family: Georgia, serif; }
+.header-right { display: flex; gap: 10px; align-items: center; }
+.last-updated { font-size: 12px; opacity: .8; }
+.btn-refresh { background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.4); color: white; border-radius: 6px; padding: 7px 14px; font-size: 13px; cursor: pointer; }
+.btn-refresh:hover { background: rgba(255,255,255,.3); }
+
+/* NAV TABS */
+.nav-tabs { display: flex; background: white; border-bottom: 2px solid var(--border); padding: 0 24px; }
+.nav-tab { padding: 12px 18px; font-size: 14px; font-weight: 500; color: var(--lt); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; }
+.nav-tab.active { color: var(--cardinal); border-bottom-color: var(--cardinal); font-weight: 600; }
+.nav-tab:hover:not(.active) { color: var(--text); }
+
+/* LAYOUT */
+.page { display: none; padding: 24px; max-width: 1400px; margin: 0 auto; }
+.page.active { display: block; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+
+/* CARDS */
+.card { background: white; border-radius: 10px; border: 1px solid var(--border); padding: 18px; }
+.card-title { font-size: 11px; font-weight: 700; color: var(--lt); letter-spacing: .8px; text-transform: uppercase; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.stat-num { font-size: 36px; font-weight: 700; color: var(--cardinal); line-height: 1; }
+.stat-label { font-size: 13px; color: var(--mid); margin-top: 4px; }
+.stat-sub { font-size: 11px; color: var(--lt); margin-top: 2px; }
+
+/* TABLES */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { text-align: left; padding: 8px 10px; background: var(--cardinal); color: white; font-weight: 600; font-size: 12px; }
+.data-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.data-table tr:nth-child(even) td { background: var(--off); }
+.data-table tr:hover td { background: var(--cardinal-light); }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.badge-phd { background: #E1F5EE; color: #0F6E56; }
+.badge-fellow { background: var(--cardinal-light); color: var(--cardinal); }
+.badge-faculty { background: #E8EDF5; color: var(--navy); }
+.badge-other { background: #EEE; color: #555; }
+
+/* HEATMAP — FLOOR MAP */
+.heatmap-controls { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+.layer-btn { padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--border); background: white; font-size: 13px; cursor: pointer; }
+.layer-btn.active { background: var(--cardinal); color: white; border-color: var(--cardinal); }
+.heatmap-legend { display: flex; align-items: center; gap: 6px; margin-left: auto; font-size: 12px; color: var(--mid); }
+.legend-bar { display: flex; gap: 2px; }
+.legend-cell { width: 20px; height: 14px; border-radius: 2px; }
+
+.floor-map { background: #F9F9F9; border: 1px solid var(--border); border-radius: 8px; padding: 20px; overflow-x: auto; }
+.poster-grid { display: grid; gap: 6px; }
+.poster-cell {
+  width: 72px; height: 56px; border-radius: 6px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; cursor: pointer; transition: transform .1s;
+  border: 1.5px solid rgba(0,0,0,.1); position: relative;
+}
+.poster-cell:hover { transform: scale(1.08); z-index: 10; }
+.poster-cell .poster-num { font-size: 11px; font-weight: 700; color: rgba(0,0,0,.6); }
+.poster-cell .poster-name { font-size: 9px; color: rgba(0,0,0,.5); text-align: center; line-height: 1.2; padding: 0 3px; }
+.poster-cell .poster-heat { font-size: 13px; font-weight: 700; color: rgba(0,0,0,.7); }
+.poster-tooltip {
+  position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+  background: var(--navy); color: white; font-size: 11px; padding: 6px 10px; border-radius: 6px;
+  white-space: nowrap; pointer-events: none; z-index: 100; display: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+.poster-cell:hover .poster-tooltip { display: block; }
+
+/* HEATMAP — ROLE MATRIX */
+.matrix-wrap { overflow-x: auto; }
+.role-matrix { border-collapse: collapse; font-size: 12px; }
+.role-matrix th { padding: 8px 12px; font-weight: 600; font-size: 11px; }
+.role-matrix th.row-header { text-align: right; color: var(--mid); }
+.role-matrix th.col-header { text-align: center; color: var(--mid); writing-mode: vertical-lr; transform: rotate(180deg); height: 80px; vertical-align: bottom; }
+.role-matrix td { width: 60px; height: 44px; text-align: center; font-weight: 600; font-size: 13px; border: 2px solid white; border-radius: 4px; }
+.matrix-axis-label { font-size: 11px; color: var(--lt); padding: 8px; }
+
+/* PROGRESS BARS */
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.bar-label { font-size: 13px; color: var(--text); width: 220px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar-track { flex: 1; height: 18px; background: var(--off); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--cardinal); border-radius: 4px; transition: width .4s; }
+.bar-count { font-size: 12px; color: var(--mid); width: 30px; text-align: right; flex-shrink: 0; }
+
+/* LOADING */
+.loading { text-align: center; padding: 60px; color: var(--lt); font-size: 14px; }
+.empty { text-align: center; padding: 40px; color: var(--lt); font-size: 13px; }
+
+/* COFFEE TABLE */
+.match-card { background: var(--off); border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
+.match-arrow { font-size: 18px; color: var(--lt); }
+.match-person { flex: 1; }
+.match-name { font-size: 14px; font-weight: 600; }
+.match-role { font-size: 12px; color: var(--mid); }
+.match-mutual { font-size: 11px; color: #2E7D32; font-weight: 600; background: #E8F5E9; padding: 2px 8px; border-radius: 20px; }
+.match-pending { font-size: 11px; color: var(--cardinal); font-weight: 600; background: var(--cardinal-light); padding: 2px 8px; border-radius: 20px; }
+
+/* SURVEY */
+.survey-q { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+.donut-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+
+/* SECTION HEADERS */
+h2 { font-size: 18px; font-weight: 700; color: var(--navy); font-family: Georgia, serif; margin-bottom: 14px; }
+h3 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+
+.alert-info { background: #E6F1FB; border: 1px solid #B5D4F4; color: #0C447C; padding: 10px 14px; border-radius: 6px; font-size: 13px; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="label">CRTEC · USC Norris — Internal</div>
+    <div class="title">Cancer Research Day 2026 · Admin Dashboard</div>
+  </div>
+  <div class="header-right">
+    <span class="last-updated" id="last-updated">Loading…</span>
+    <button class="btn-refresh" onclick="loadAll()">↻ Refresh</button>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="showTab('overview')">Overview</div>
+  <div class="nav-tab" onclick="showTab('users')">Users & Roles</div>
+  <div class="nav-tab" onclick="showTab('heatmap')">Heatmaps</div>
+  <div class="nav-tab" onclick="showTab('coffee')">Coffee Consults</div>
+  <div class="nav-tab" onclick="showTab('survey')">Survey</div>
+</div>
+
+<!-- OVERVIEW TAB -->
+<div id="tab-overview" class="page active">
+  <div class="grid-4" id="overview-stats">
+    <div class="card"><div class="stat-num" id="stat-users">—</div><div class="stat-label">Unique app users</div></div>
+    <div class="card"><div class="stat-num" id="stat-convos">—</div><div class="stat-label">Conversations logged</div></div>
+    <div class="card"><div class="stat-num" id="stat-coffee">—</div><div class="stat-label">Coffee Consult selections</div></div>
+    <div class="card"><div class="stat-num" id="stat-views">—</div><div class="stat-label">Profile views</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Top conversations — by poster</div>
+      <div id="top-convos-list"><div class="loading">Loading…</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Activity timeline — conversations per hour</div>
+      <div id="timeline-chart" style="height:200px; display:flex; align-items:flex-end; gap:4px; padding-top:10px;"></div>
+      <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--lt); margin-top:4px;" id="timeline-labels"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Recent activity log</div>
+    <table class="data-table" id="activity-log">
+      <thead><tr><th>Time</th><th>Who</th><th>Role</th><th>Action</th><th>With / Viewed</th></tr></thead>
+      <tbody id="activity-log-body"><tr><td colspan="5" style="text-align:center;padding:20px;color:var(--lt)">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- USERS & ROLES TAB -->
+<div id="tab-users" class="page">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Users by role</div>
+      <div id="users-by-role"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Users by program / department</div>
+      <div id="users-by-program"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">All registered users</div>
+    <table class="data-table">
+      <thead><tr><th>Name</th><th>Role</th><th>Program</th><th>Conversations</th><th>Profile views</th><th>Coffee Consult</th><th>First seen</th></tr></thead>
+      <tbody id="all-users-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- HEATMAPS TAB -->
+<div id="tab-heatmap" class="page">
+  <div class="alert-info" id="heatmap-note">
+    <strong>Floor map:</strong> Poster positions are arranged in the grid below. Click any poster for details. Update the <code>POSTER_LAYOUT</code> array in this file to match the actual room layout before the event.
+  </div>
+
+  <!-- FLOOR MAP HEATMAP -->
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-title">Poster session floor map heatmap</div>
+    <div class="heatmap-controls">
+      <span style="font-size:13px;font-weight:600;color:var(--mid);">Signal:</span>
+      <button class="layer-btn active" onclick="setLayer('views', this)">Profile views</button>
+      <button class="layer-btn" onclick="setLayer('convos', this)">Conversations logged</button>
+      <button class="layer-btn" onclick="setLayer('time', this)">Time on profile</button>
+      <div class="heatmap-legend">
+        <span>Low</span>
+        <div class="legend-bar">
+          <div class="legend-cell" style="background:var(--hot1)"></div>
+          <div class="legend-cell" style="background:var(--hot2)"></div>
+          <div class="legend-cell" style="background:var(--hot3)"></div>
+          <div class="legend-cell" style="background:var(--hot4)"></div>
+          <div class="legend-cell" style="background:var(--hot5)"></div>
+        </div>
+        <span>High</span>
+      </div>
+    </div>
+    <div class="floor-map">
+      <div id="poster-grid-container"></div>
+    </div>
+  </div>
+
+  <!-- ROLE INTERACTION MATRIX -->
+  <div class="card">
+    <div class="card-title">Role interaction matrix — who talked to whom</div>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:14px;">Rows = viewer role · Columns = profile viewed role · Numbers = conversation count</p>
+    <div class="matrix-wrap">
+      <table class="role-matrix" id="role-matrix"></table>
+    </div>
+  </div>
+</div>
+
+<!-- COFFEE CONSULTS TAB -->
+<div id="tab-coffee" class="page">
+  <div class="grid-3">
+    <div class="card"><div class="stat-num" id="coffee-selections">—</div><div class="stat-label">Net selections</div><div class="stat-sub">Coffee Consults requested</div></div>
+    <div class="card"><div class="stat-num" id="coffee-mutual">—</div><div class="stat-label">Mutual matches</div><div class="stat-sub">Both sides selected each other</div></div>
+    <div class="card"><div class="stat-num" id="coffee-pending">—</div><div class="stat-label">Pending confirmation</div><div class="stat-sub">CRTEC to follow up</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">All Coffee Consult selections</div>
+      <div id="coffee-list"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Mutual matches — confirmed pairs</div>
+      <div id="mutual-list"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Export — Coffee Consult action list for CRTEC</div>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:12px;">Use this to coordinate with matched participants. Copy or download.</p>
+    <button class="btn-refresh" style="background:var(--cardinal);border:none;margin-bottom:12px;" onclick="exportCoffee()">Download CSV</button>
+    <table class="data-table" id="coffee-export-table">
+      <thead><tr><th>Requester</th><th>Role</th><th>Program</th><th>Requested</th><th>Their Role</th><th>Mutual?</th><th>Time</th></tr></thead>
+      <tbody id="coffee-export-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SURVEY TAB -->
+<div id="tab-survey" class="page">
+  <div class="alert-info">
+    Survey is sent to matched Coffee Consult participants after their meeting (by Nov 1). Send the survey link via CRTEC email. Responses appear here automatically once the Apps Script endpoint is connected.
+  </div>
+  <div class="grid-3">
+    <div class="card"><div class="stat-num" id="survey-responses">—</div><div class="stat-label">Survey responses</div></div>
+    <div class="card"><div class="stat-num" id="survey-continued">—</div><div class="stat-label">Want to continue</div><div class="stat-sub">% of respondents</div></div>
+    <div class="card"><div class="stat-num" id="survey-useful">—</div><div class="stat-label">Avg usefulness score</div><div class="stat-sub">Out of 5</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Survey responses</div>
+    <table class="data-table">
+      <thead><tr><th>Name</th><th>Role</th><th>Meeting happened?</th><th>Usefulness (1-5)</th><th>Continue?</th><th>Most useful aspect</th></tr></thead>
+      <tbody id="survey-body"><tr><td colspan="6" style="text-align:center;padding:20px;color:var(--lt)">No responses yet</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script src="config.js?v=19"></script>
+<script>
+// ── POSTER LAYOUT ──────────────────────────────
+// Edit this to match the actual room layout.
+// rows: array of rows, each row is an array of poster numbers (or null for empty space)
+const POSTER_LAYOUT = [
+  ['A-01','A-02','A-03','A-04','A-05','A-06','A-07','A-08','A-09','A-10','A-11','A-12'],
+  [null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null ],
+  ['B-01','B-02','B-03','B-04','B-05','B-06','B-07','B-08','B-09','B-10','B-11','B-12'],
+  [null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null ],
+  ['C-01','C-02','C-03','C-04','C-05','C-06','C-07','C-08','C-09','C-10','C-11','C-12'],
+  [null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null ],
+  ['D-01','D-02','D-03','D-04','D-05','D-06','D-07','D-08','D-09','D-10','D-11','D-12'],
+  [null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null ],
+  ['E-01','E-02','E-03','E-04','E-05','E-06','E-07','E-08','E-09','E-10','E-11','E-12'],
+  [null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null ],
+  ['F-01','F-02','F-03','F-04','F-05','F-06','F-07','F-08','F-09','F-10','F-11','F-12'],
+  [null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null,  null ],
+  ['G-01','G-02','G-03','H-01','H-02','H-03','H-04','I-01','I-02','J-01','J-02','J-03'],
+];
+
+// ── STATE ──────────────────────────────────────
+let DATA = { users:[], convos:[], coffee:[], views:[], survey:[] };
+let currentLayer = 'views';
+let participantMap = {}; // id -> participant object from main sheet
+
+// ── INIT ───────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  loadAll();
+});
+
+async function loadAll() {
+  document.getElementById('last-updated').textContent = 'Loading…';
+  await Promise.all([loadSheetData(), loadTrackingData()]);
+  renderAll();
+  document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+}
+
+// Load participant data from Google Sheet (same as main app)
+async function loadSheetData() {
+  if (!CONFIG.sheet_url || CONFIG.sheet_url.includes('PASTE')) {
+    // Use sample data
+    participantMap = {};
+    if (typeof SAMPLE_DATA !== 'undefined') {
+      SAMPLE_DATA.forEach(p => { participantMap[p.id] = p; });
+    }
+    return;
+  }
+  try {
+    const resp = await fetch(CONFIG.sheet_url);
+    const csv = await resp.text();
+    const parsed = parseCSV(csv);
+    parsed.forEach(p => { participantMap[p.id] = p; });
+  } catch(e) { console.warn('Sheet load failed:', e); }
+}
+
+// Load tracking data from Apps Script
+async function loadTrackingData() {
+  // If no script URL, use demo/mock data
+  if (!CONFIG.script_url || CONFIG.script_url.includes('PASTE')) {
+    DATA = getMockData();
+    return;
+  }
+  try {
+    const resp = await fetch(CONFIG.script_url + '?action=export');
+    const json = await resp.json();
+    if (json.users)  DATA.users  = json.users;
+    if (json.convos) DATA.convos = json.convos;
+    if (json.coffee) DATA.coffee = json.coffee;
+    if (json.views)  DATA.views  = json.views;
+    if (json.survey) DATA.survey = json.survey;
+  } catch(e) {
+    console.warn('Tracking data load failed:', e);
+    DATA = getMockData();
+  }
+}
+
+// ── RENDER ALL ─────────────────────────────────
+function renderAll() {
+  renderOverview();
+  renderUsers();
+  renderHeatmap();
+  renderCoffee();
+  renderSurvey();
+}
+
+// ── OVERVIEW ───────────────────────────────────
+function renderOverview() {
+  const activeConvos = DATA.convos.filter(c => c.status !== 'undone');
+  const netCoffee = getNetCoffee();
+
+  document.getElementById('stat-users').textContent  = DATA.users.length;
+  document.getElementById('stat-convos').textContent = activeConvos.length;
+  document.getElementById('stat-coffee').textContent = netCoffee.length;
+  document.getElementById('stat-views').textContent  = DATA.views.length;
+
+  // Top posters by conversations
+  const convoByPoster = {};
+  activeConvos.forEach(c => {
+    const key = c.participant_id || c.participant_name;
+    const p = participantMap[c.participant_id];
+    const label = (p ? p.name : c.participant_name) + (p && p.poster_number ? ' · ' + p.poster_number : '');
+    convoByPoster[label] = (convoByPoster[label] || 0) + 1;
+  });
+  const sorted = Object.entries(convoByPoster).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const maxVal = sorted[0] ? sorted[0][1] : 1;
+  document.getElementById('top-convos-list').innerHTML = sorted.length === 0
+    ? '<div class="empty">No conversations logged yet</div>'
+    : sorted.map(([label, count]) => `
+      <div class="bar-row">
+        <div class="bar-label" title="${label}">${label}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.round(count/maxVal*100)}%"></div></div>
+        <div class="bar-count">${count}</div>
+      </div>`).join('');
+
+  // Timeline — conversations per hour
+  const hourCounts = {};
+  activeConvos.forEach(c => {
+    const d = new Date(c.timestamp);
+    const h = d.getHours();
+    hourCounts[h] = (hourCounts[h] || 0) + 1;
+  });
+  const hours = Array.from({length:24}, (_,i)=>i).filter(h => h >= 7 && h <= 20);
+  const maxH = Math.max(1, ...hours.map(h => hourCounts[h]||0));
+  const tlChart = document.getElementById('timeline-chart');
+  tlChart.innerHTML = hours.map(h => {
+    const val = hourCounts[h] || 0;
+    const pct = Math.round(val / maxH * 180);
+    return `<div style="display:flex;flex-direction:column;align-items:center;flex:1;">
+      <div style="font-size:10px;color:var(--mid);margin-bottom:3px;">${val||''}</div>
+      <div style="width:100%;height:${pct}px;background:var(--cardinal);border-radius:3px 3px 0 0;min-height:${val?2:0}px;"></div>
+    </div>`;
+  }).join('');
+  document.getElementById('timeline-labels').innerHTML = hours.map(h =>
+    `<div style="flex:1;text-align:center;font-size:10px;">${h%2===0?h+'h':''}</div>`
+  ).join('');
+
+  // Activity log — merge all actions sorted by time
+  const allActions = [
+    ...DATA.convos.map(c => ({ time: c.timestamp, who: c.viewer_name, role: c.viewer_role, action: c.status==='undone'?'Undid conversation':'Logged conversation', with: c.participant_name })),
+    ...DATA.coffee.map(c => ({ time: c.timestamp, who: c.requester_name, role: c.requester_role, action: c.action==='removed'?'Removed Coffee Consult':'Requested Coffee Consult', with: c.participant_name })),
+    ...DATA.views.slice(-30).map(v => ({ time: v.timestamp, who: '', role: v.viewer_role, action: 'Viewed profile', with: v.participant_name })),
+  ].sort((a,b) => new Date(b.time) - new Date(a.time)).slice(0, 50);
+
+  document.getElementById('activity-log-body').innerHTML = allActions.length === 0
+    ? '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--lt)">No activity yet</td></tr>'
+    : allActions.map(a => `
+      <tr>
+        <td style="color:var(--lt);white-space:nowrap">${formatTime(a.time)}</td>
+        <td style="font-weight:600">${a.who || '—'}</td>
+        <td>${roleBadge(a.role)}</td>
+        <td>${a.action}</td>
+        <td>${a.with || '—'}</td>
+      </tr>`).join('');
+}
+
+// ── USERS ──────────────────────────────────────
+function renderUsers() {
+  // By role
+  const byRole = groupBy(DATA.users, 'role');
+  const maxRole = Math.max(1, ...Object.values(byRole).map(v=>v.length));
+  document.getElementById('users-by-role').innerHTML = Object.entries(byRole)
+    .sort((a,b)=>b[1].length-a[1].length)
+    .map(([role, list]) => `
+      <div class="bar-row">
+        <div class="bar-label">${role||'Unknown'}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.round(list.length/maxRole*100)}%"></div></div>
+        <div class="bar-count">${list.length}</div>
+      </div>`).join('') || '<div class="empty">No users yet</div>';
+
+  // By program
+  const byProg = groupBy(DATA.users.filter(u=>u.program), 'program');
+  const maxProg = Math.max(1, ...Object.values(byProg).map(v=>v.length));
+  document.getElementById('users-by-program').innerHTML = Object.entries(byProg)
+    .sort((a,b)=>b[1].length-a[1].length)
+    .map(([prog, list]) => `
+      <div class="bar-row">
+        <div class="bar-label" title="${prog}">${prog||'Unknown'}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.round(list.length/maxProg*100)}%"></div></div>
+        <div class="bar-count">${list.length}</div>
+      </div>`).join('') || '<div class="empty">No program data yet</div>';
+
+  // All users table
+  const activeConvos = DATA.convos.filter(c=>c.status!=='undone');
+  const tbody = document.getElementById('all-users-body');
+  tbody.innerHTML = DATA.users.length === 0
+    ? '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--lt)">No users yet</td></tr>'
+    : DATA.users.map(u => {
+        const myConvos = activeConvos.filter(c=>c.session_id===u.session_id).length;
+        const myViews  = DATA.views.filter(v=>v.session_id===u.session_id).length;
+        const myCoffee = getNetCoffee().filter(c=>c.session_id===u.session_id).length;
+        return `<tr>
+          <td style="font-weight:600">${u.name||'—'}</td>
+          <td>${roleBadge(u.role)}</td>
+          <td style="font-size:12px;color:var(--mid)">${u.program||'—'}</td>
+          <td style="text-align:center">${myConvos}</td>
+          <td style="text-align:center">${myViews}</td>
+          <td style="text-align:center">${myCoffee > 0 ? '☕ ' + myCoffee : '—'}</td>
+          <td style="color:var(--lt);font-size:12px">${formatTime(u.timestamp)}</td>
+        </tr>`;
+      }).join('');
+}
+
+// ── HEATMAP ────────────────────────────────────
+function renderHeatmap() {
+  renderFloorMap();
+  renderRoleMatrix();
+}
+
+function setLayer(layer, btn) {
+  currentLayer = layer;
+  document.querySelectorAll('.layer-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderFloorMap();
+}
+
+function getHeatValues() {
+  const vals = {};
+  const activeConvos = DATA.convos.filter(c=>c.status!=='undone');
+
+  if (currentLayer === 'views') {
+    DATA.views.forEach(v => {
+      const p = participantMap[v.participant_id];
+      if (p && p.poster_number) vals[p.poster_number] = (vals[p.poster_number]||0) + 1;
+    });
+  } else if (currentLayer === 'convos') {
+    activeConvos.forEach(c => {
+      const p = participantMap[c.participant_id];
+      if (p && p.poster_number) vals[p.poster_number] = (vals[p.poster_number]||0) + 1;
+    });
+  } else if (currentLayer === 'time') {
+    // Time on profile = average seconds between consecutive view events for same session+participant
+    // Approximated: count views as proxy (future: track view_start and view_end)
+    DATA.views.forEach(v => {
+      const p = participantMap[v.participant_id];
+      if (p && p.poster_number) vals[p.poster_number] = (vals[p.poster_number]||0) + 1;
+    });
+  }
+  return vals;
+}
+
+function heatColor(val, max) {
+  if (!val || max === 0) return '#F0F0F0';
+  const pct = val / max;
+  if (pct < 0.2) return '#FFF3CD';
+  if (pct < 0.4) return '#FFD580';
+  if (pct < 0.6) return '#FF9800';
+  if (pct < 0.8) return '#E65100';
+  return '#8B0000';
+}
+
+function heatTextColor(val, max) {
+  const pct = val / max;
+  return pct >= 0.4 ? 'white' : '#333';
+}
+
+function renderFloorMap() {
+  const vals = getHeatValues();
+  const max = Math.max(1, ...Object.values(vals));
+  const layerLabel = currentLayer === 'views' ? 'views' : currentLayer === 'convos' ? 'conversations' : 'time score';
+
+  const container = document.getElementById('poster-grid-container');
+  container.innerHTML = `<div style="display:grid;grid-template-columns:repeat(${POSTER_LAYOUT[0].length},72px);gap:6px;">` +
+    POSTER_LAYOUT.flatMap(row =>
+      row.map(num => {
+        if (!num) return `<div style="width:72px;height:56px;"></div>`;
+        const val = vals[num] || 0;
+        const p = Object.values(participantMap).find(x => x.poster_number === num);
+        const name = p ? p.name.split(' ').slice(-1)[0] : '';
+        const bg = heatColor(val, max);
+        const tc = heatTextColor(val, max);
+        const tip = p
+          ? `${p.name} · Poster ${num}<br>${p.title ? p.title.substring(0,60)+'…' : ''}<br>${layerLabel}: ${val}`
+          : `Poster ${num} · ${layerLabel}: ${val}`;
+        return `<div class="poster-cell" style="background:${bg};color:${tc};">
+          <div class="poster-num" style="color:${tc}">${num}</div>
+          ${val > 0 ? `<div class="poster-heat" style="color:${tc}">${val}</div>` : ''}
+          ${name ? `<div class="poster-name" style="color:${tc}">${name}</div>` : ''}
+          <div class="poster-tooltip">${tip}</div>
+        </div>`;
+      })
+    ).join('') + '</div>';
+}
+
+function renderRoleMatrix() {
+  const activeConvos = DATA.convos.filter(c=>c.status!=='undone');
+  const roles = [...new Set([
+    ...activeConvos.map(c=>c.viewer_role),
+    ...activeConvos.map(c=>c.participant_role)
+  ].filter(Boolean))].sort();
+
+  if (roles.length === 0) {
+    document.getElementById('role-matrix').innerHTML =
+      '<tr><td style="padding:20px;color:var(--lt);text-align:center">No conversation data yet</td></tr>';
+    return;
+  }
+
+  const matrix = {};
+  activeConvos.forEach(c => {
+    const key = (c.viewer_role||'Unknown') + '|' + (c.participant_role||'Unknown');
+    matrix[key] = (matrix[key]||0) + 1;
+  });
+  const maxVal = Math.max(1, ...Object.values(matrix));
+
+  const shortRole = r => r.replace('Clinical Fellow / Resident','Fellow').replace('PhD Student','PhD').replace('Postdoctoral Fellow','Postdoc');
+
+  const table = document.getElementById('role-matrix');
+  table.innerHTML =
+    `<tr>
+      <th class="row-header">Viewer →</th>
+      ${roles.map(r=>`<th class="col-header">${shortRole(r)}</th>`).join('')}
+    </tr>` +
+    roles.map(viewer =>
+      `<tr>
+        <th class="row-header">${shortRole(viewer)}</th>
+        ${roles.map(participant => {
+          const val = matrix[viewer+'|'+participant] || 0;
+          const bg = heatColor(val, maxVal);
+          const tc = heatTextColor(val, maxVal);
+          return `<td style="background:${bg};color:${tc}">${val||''}</td>`;
+        }).join('')}
+      </tr>`
+    ).join('');
+}
+
+// ── COFFEE ─────────────────────────────────────
+function getNetCoffee() {
+  const selected = DATA.coffee.filter(c=>c.action==='selected');
+  const removed  = DATA.coffee.filter(c=>c.action==='removed');
+  return selected.filter(sel =>
+    !removed.some(rem =>
+      rem.session_id===sel.session_id && rem.participant_id===sel.participant_id &&
+      new Date(rem.timestamp) > new Date(sel.timestamp)
+    )
+  );
+}
+
+function renderCoffee() {
+  const net = getNetCoffee();
+  const mutual = net.filter(a =>
+    net.some(b => b.session_id===a.participant_id && b.participant_id===a.session_id)
+  );
+  const pending = net.filter(a =>
+    !net.some(b => b.session_id===a.participant_id && b.participant_id===a.session_id)
+  );
+
+  document.getElementById('coffee-selections').textContent = net.length;
+  document.getElementById('coffee-mutual').textContent = Math.floor(mutual.length/2);
+  document.getElementById('coffee-pending').textContent = pending.length;
+
+  // All selections list
+  document.getElementById('coffee-list').innerHTML = net.length === 0
+    ? '<div class="empty">No Coffee Consult selections yet</div>'
+    : net.map(c => {
+        const isMutual = net.some(b=>b.session_id===c.participant_id&&b.participant_id===c.session_id);
+        return `<div class="match-card">
+          <div class="match-person">
+            <div class="match-name">${c.requester_name||'—'}</div>
+            <div class="match-role">${c.requester_role||''} · ${c.requester_program||''}</div>
+          </div>
+          <div class="match-arrow">→</div>
+          <div class="match-person">
+            <div class="match-name">${c.participant_name||'—'}</div>
+            <div class="match-role">${c.participant_role||''}</div>
+          </div>
+          ${isMutual ? '<span class="match-mutual">✓ Mutual</span>' : '<span class="match-pending">Pending</span>'}
+        </div>`;
+      }).join('');
+
+  // Mutual pairs (deduplicated)
+  const seen = new Set();
+  const mutualPairs = mutual.filter(c => {
+    const key = [c.session_id, c.participant_id].sort().join('|');
+    if (seen.has(key)) return false;
+    seen.add(key); return true;
+  });
+  document.getElementById('mutual-list').innerHTML = mutualPairs.length === 0
+    ? '<div class="empty">No mutual matches yet</div>'
+    : mutualPairs.map(c => `
+        <div class="match-card" style="background:#E8F5E9;border:1px solid #A5D6A7;">
+          <div class="match-person">
+            <div class="match-name">${c.requester_name}</div>
+            <div class="match-role">${c.requester_role}</div>
+          </div>
+          <div class="match-arrow" style="color:#2E7D32;">☕</div>
+          <div class="match-person">
+            <div class="match-name">${c.participant_name}</div>
+            <div class="match-role">${c.participant_role}</div>
+          </div>
+          <span class="match-mutual">✓ Match</span>
+        </div>`).join('');
+
+  // Export table
+  document.getElementById('coffee-export-body').innerHTML = net.map(c => {
+    const isMutual = net.some(b=>b.session_id===c.participant_id&&b.participant_id===c.session_id);
+    return `<tr>
+      <td>${c.requester_name||'—'}</td>
+      <td>${c.requester_role||'—'}</td>
+      <td>${c.requester_program||'—'}</td>
+      <td>${c.participant_name||'—'}</td>
+      <td>${c.participant_role||'—'}</td>
+      <td>${isMutual?'✓ Yes':'No'}</td>
+      <td style="color:var(--lt)">${formatTime(c.timestamp)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function exportCoffee() {
+  const net = getNetCoffee();
+  const rows = [['Requester','Role','Program','Requested','Their Role','Mutual?','Time']];
+  net.forEach(c => {
+    const isMutual = net.some(b=>b.session_id===c.participant_id&&b.participant_id===c.session_id);
+    rows.push([c.requester_name,c.requester_role,c.requester_program,c.participant_name,c.participant_role,isMutual?'Yes':'No',formatTime(c.timestamp)]);
+  });
+  const csv = rows.map(r=>r.map(v=>`"${(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'CRD2026_CoffeeConsults.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+// ── SURVEY ─────────────────────────────────────
+function renderSurvey() {
+  const s = DATA.survey;
+  document.getElementById('survey-responses').textContent = s.length;
+  const continued = s.filter(r=>r.continue_collaboration==='Yes').length;
+  document.getElementById('survey-continued').textContent =
+    s.length > 0 ? Math.round(continued/s.length*100) + '%' : '—';
+  const scores = s.map(r=>parseFloat(r.meeting_useful)).filter(n=>!isNaN(n));
+  document.getElementById('survey-useful').textContent =
+    scores.length > 0 ? (scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1) : '—';
+
+  document.getElementById('survey-body').innerHTML = s.length === 0
+    ? '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--lt)">No responses yet</td></tr>'
+    : s.map(r=>`<tr>
+        <td>${r.name||'—'}</td>
+        <td>${roleBadge(r.role)}</td>
+        <td>${r.meeting_happened||'—'}</td>
+        <td style="text-align:center">${r.meeting_useful||'—'}</td>
+        <td>${r.continue_collaboration||'—'}</td>
+        <td style="font-size:12px;color:var(--mid)">${r.most_useful||'—'}</td>
+      </tr>`).join('');
+}
+
+// ── MOCK DATA ──────────────────────────────────
+function getMockData() {
+  const participants = typeof SAMPLE_DATA !== 'undefined' ? SAMPLE_DATA : [];
+  const roles = ['PhD Student','Clinical Fellow / Resident','Faculty','Postdoctoral Fellow','Community Member'];
+  const programs = ['Cancer Biology & Genomics (CBG) — PIBBS','Medical Oncology Fellowship','Epidemiology — PPHS','Tumor Immunology & Microenvironment'];
+
+  const users = Array.from({length:34}, (_,i) => ({
+    session_id: 'sess_'+i,
+    name: ['Alex','Jordan','Sam','Morgan','Casey','Riley','Drew','Quinn'][i%8] + ' ' + String.fromCharCode(65+i%20),
+    role: roles[i%5],
+    program: programs[i%4],
+    timestamp: new Date(Date.now() - Math.random()*4*3600000).toISOString()
+  }));
+
+  const cbgParticipants = participants.filter(p=>p.role==='PhD Student'&&(p.department||'').includes('CBG'));
+  const fellowParticipants = participants.filter(p=>p.role==='Clinical Fellow / Resident');
+  const allP = participants.slice(0,15);
+
+  const convos = Array.from({length:67}, (_,i) => {
+    const viewer = users[i % users.length];
+    const target = allP[i % allP.length];
+    return {
+      session_id: viewer.session_id, viewer_name: viewer.name, viewer_role: viewer.role, viewer_program: viewer.program,
+      participant_id: target.id, participant_name: target.name, participant_role: target.role,
+      participant_program: target.research_program||'',
+      timestamp: new Date(Date.now() - Math.random()*5*3600000).toISOString(), status: i%12===0?'undone':'logged'
+    };
+  });
+
+  const coffee = [];
+  const cbgUser = users.find(u=>u.role==='PhD Student');
+  const fellowUser = users.find(u=>u.role==='Clinical Fellow / Resident');
+  if (cbgUser && fellowParticipants[0]) {
+    coffee.push({ session_id:cbgUser.session_id, requester_name:cbgUser.name, requester_role:cbgUser.role, requester_program:cbgUser.program, participant_id:fellowParticipants[0].id, participant_name:fellowParticipants[0].name, participant_role:fellowParticipants[0].role, participant_program:'', action:'selected', timestamp: new Date().toISOString() });
+  }
+  if (fellowUser && cbgParticipants[0]) {
+    coffee.push({ session_id:fellowUser.session_id, requester_name:fellowUser.name, requester_role:fellowUser.role, requester_program:fellowUser.program, participant_id:cbgParticipants[0].id, participant_name:cbgParticipants[0].name, participant_role:cbgParticipants[0].role, participant_program:cbgParticipants[0].department||'', action:'selected', timestamp: new Date().toISOString() });
+  }
+
+  const views = Array.from({length:142}, (_,i) => {
+    const viewer = users[i % users.length];
+    const target = allP[i % allP.length];
+    return { session_id:viewer.session_id, viewer_role:viewer.role, viewer_program:viewer.program, participant_id:target.id, participant_name:target.name, participant_role:target.role, participant_program:target.research_program||'', timestamp: new Date(Date.now()-Math.random()*6*3600000).toISOString() };
+  });
+
+  return { users, convos, coffee, views, survey:[] };
+}
+
+// ── HELPERS ────────────────────────────────────
+function showTab(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function groupBy(arr, key) {
+  return arr.reduce((acc,item)=>{ const k=item[key]||'Unknown'; if(!acc[k])acc[k]=[]; acc[k].push(item); return acc; }, {});
+}
+
+function roleBadge(role) {
+  if (!role) return '—';
+  const cls = role.includes('PhD')||role.includes('doctoral') ? 'badge-phd'
+    : role.includes('Fellow')||role.includes('Resident') ? 'badge-fellow'
+    : role.includes('Faculty') ? 'badge-faculty' : 'badge-other';
+  const short = role.replace('Clinical Fellow / Resident','Fellow').replace('Postdoctoral Fellow','Postdoc');
+  return `<span class="badge ${cls}">${short}</span>`;
+}
+
+function formatTime(ts) {
+  if (!ts) return '—';
+  try { return new Date(ts).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); } catch(e) { return '—'; }
+}
+
+function parseCSV(csv) {
+  const lines = csv.trim().split('\n');
+  const headers = lines[0].split(',').map(h=>h.trim().replace(/^"|"$/g,'').toLowerCase().replace(/ /g,'_'));
+  return lines.slice(1).map(line => {
+    const vals = line.split(',').map(v=>v.trim().replace(/^"|"$/g,''));
+    const obj = {};
+    headers.forEach((h,i)=>{ obj[h]=vals[i]||''; });
+    return obj;
+  }).filter(r=>r.name||r.id);
+}
+</script>
+</body>
+</html>
